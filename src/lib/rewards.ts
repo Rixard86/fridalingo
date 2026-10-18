@@ -1,4 +1,4 @@
-import { LESSON_KINDS, REVIEW_KEY } from "./lessons";
+import { isLessonKind, LESSON_KINDS, REVIEW_KEY } from "./lessons";
 import type { Progress } from "./types";
 
 export const LEVEL_XP = 50;
@@ -11,6 +11,9 @@ const FAST_COMBO = 10;
 const SMALL_XP = 100;
 const BIG_XP = 500;
 const PERFECTIONIST_LESSONS = 10;
+const ENDLESS_GOOD_SCORE = 25;
+const ENDLESS_GREAT_SCORE = 50;
+const WEEK_PATTERN = /^\d+$/;
 
 export interface Badge {
   id: string;
@@ -33,7 +36,8 @@ function totalCompleted(progress: Progress): number {
 function hasMasteredAWeek(progress: Progress): boolean {
   const kindsPerWeek = new Map<string, number>();
   for (const key of Object.keys(progress.completed)) {
-    const [week] = key.split("/");
+    const [week, kind = ""] = key.split("/");
+    if (!WEEK_PATTERN.test(week) || !isLessonKind(kind)) continue;
     kindsPerWeek.set(week, (kindsPerWeek.get(week) ?? 0) + 1);
   }
   return [...kindsPerWeek.values()].some((count) => count >= LESSON_KINDS.length);
@@ -49,6 +53,8 @@ export const BADGES: Badge[] = [
   { id: "xp-500", emoji: "🚀", title: "Raketgås", description: "Samla 500 XP", isEarned: (p) => p.xp >= BIG_XP },
   { id: "veckomastare", emoji: "👑", title: "Veckomästare", description: "Klara alla lektioner i en vecka", isEarned: hasMasteredAWeek },
   { id: "minnesmastare", emoji: "🧠", title: "Minnesmästare", description: "Klara en repetition", isEarned: (p) => (p.completed[REVIEW_KEY] ?? 0) >= FIRST_STEP_LESSONS },
+  { id: "endless-25", emoji: "🛡️", title: "Överlevare", description: "25 poäng i Endless", isEarned: (p) => p.endlessRecord >= ENDLESS_GOOD_SCORE },
+  { id: "endless-50", emoji: "♾️", title: "Oändlig", description: "50 poäng i Endless", isEarned: (p) => p.endlessRecord >= ENDLESS_GREAT_SCORE },
   { id: "perfektionist", emoji: "🌟", title: "Perfektionist", description: "10 felfria lektioner", isEarned: (p) => p.perfectLessons >= PERFECTIONIST_LESSONS },
 ];
 

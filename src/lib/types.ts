@@ -33,6 +33,7 @@ export interface AnswerEvent {
 export interface ExerciseOutcome {
   events: AnswerEvent[];
   solution: string;
+  timedOut?: boolean;
 }
 
 export interface Progress {
@@ -47,6 +48,7 @@ export interface Progress {
   badges: string[];
   outfit: string | null;
   stars: Record<string, number>;
+  endlessRecord: number;
 }
 
 export interface LessonResult {
@@ -54,4 +56,5 @@ export interface LessonResult {
   events: AnswerEvent[];
   mistakes: number;
   bestCombo: number;
+  xp?: number;
 }

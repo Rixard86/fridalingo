@@ -37,10 +37,12 @@ export function emptyProgress(): Progress {
     badges: [],
     outfit: null,
     stars: {},
+    endlessRecord: 0,
   };
 }
 
 export function lessonXp(result: LessonResult): number {
+  if (result.xp !== undefined) return result.xp;
   const perfectBonus = result.mistakes === 0 ? PERFECT_BONUS_XP : 0;
   const comboBonus = Math.min(MAX_COMBO_BONUS_XP, Math.floor(result.bestCombo / COMBO_STEP));
   return LESSON_XP + perfectBonus + comboBonus;

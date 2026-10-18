@@ -1,5 +1,16 @@
 export type RandomSource = () => number;
 
+const LCG_MULTIPLIER = 16807;
+const LCG_MODULUS = 2147483647;
+
+export function seededRandom(seed: number): RandomSource {
+  let state = Math.max(1, Math.floor(seed)) % LCG_MODULUS;
+  return () => {
+    state = (state * LCG_MULTIPLIER) % LCG_MODULUS;
+    return state / LCG_MODULUS;
+  };
+}
+
 export function shuffle<T>(items: readonly T[], random: RandomSource): T[] {
   const result = [...items];
   for (let index = result.length - 1; index > 0; index--) {

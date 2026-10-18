@@ -1,4 +1,4 @@
-import type { Direction, Word } from "./types";
+import type { Direction, Exercise, Word } from "./types";
 
 const PUNCTUATION = /[?!.,;:]/g;
 const WHITESPACE = /\s+/g;
@@ -31,4 +31,19 @@ export function fillBlank(sentence: string, answer: string): string {
   const bare = answer.replace(PUNCTUATION, "");
   const word = before.length === 0 ? bare : bare.toLowerCase();
   return `${before}${word}${after}`;
+}
+
+export function solutionFor(exercise: Exercise): string {
+  switch (exercise.kind) {
+    case "match":
+      return "";
+    case "choice":
+      return answersFor(exercise.word, exercise.direction)[0];
+    case "write":
+      return answersFor(exercise.word, exercise.direction).join(" / ");
+    case "listen":
+      return exercise.word.en.join(" / ");
+    case "sentence":
+      return exercise.word.sentence ? fillBlank(exercise.word.sentence.en, exercise.word.en[0]) : exercise.word.en[0];
+  }
 }

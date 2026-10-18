@@ -1,15 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { ALL_WORDS, findWeek } from "@/data/weeks";
 import { buildLesson, buildReviewLesson, pickReviewWords, REVIEW_SIZE, type LessonContext } from "./lessons";
+import { seededRandom } from "./random";
 import type { Exercise } from "./types";
-
-function seededRandom(seed: number): () => number {
-  let state = seed;
-  return () => {
-    state = (state * 16807) % 2147483647;
-    return state / 2147483647;
-  };
-}
 
 function contextFor(weekNumber: number): LessonContext {
   const words = findWeek(weekNumber)?.words ?? [];

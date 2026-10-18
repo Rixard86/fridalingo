@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Goose } from "@/components/goose/Goose";
 import { WEEKS } from "@/data/weeks";
-import { buildLevels, currentLevelIndex, isLevelDone, isLevelUnlocked } from "@/lib/levels";
+import { buildMap, currentLevelIndex, isLevelDone, isLevelUnlocked, type Level } from "@/lib/levels";
 import { layoutMap, type NodePosition } from "@/lib/mapLayout";
 import type { Progress } from "@/lib/types";
 import { LevelNode, type NodeState } from "./LevelNode";
@@ -12,15 +12,12 @@ import { themeFor } from "./themes";
 import { WordListSheet } from "./WordListSheet";
 import { WorldBand } from "./WorldBand";
 
-const LEVELS = buildLevels(WEEKS);
-const LAYOUT = layoutMap(LEVELS);
-const WORLD_INDEX = new Map(LAYOUT.worlds.map((world) => [world.week, world.index]));
 const MAP_CENTER = 50;
 const GOOSE_OFFSET_PX = 72;
 
-function nodeState(progress: Progress, index: number): NodeState {
-  if (isLevelDone(progress, LEVELS[index])) return "done";
-  return isLevelUnlocked(progress, { levels: LEVELS, index }) ? "open" : "locked";
+function nodeState(progress: Progress, position: { levels: Level[]; index: number }): NodeState {
+  if (isLevelDone(progress, position.levels[position.index])) return "done";
+  return isLevelUnlocked(progress, position) ? "open" : "locked";
 }
 
 function GooseMarker({ position, outfit }: { position: NodePosition; outfit: string | null }) {
@@ -30,7 +27,7 @@ function GooseMarker({ position, outfit }: { position: NodePosition; outfit: str
       className="pointer-events-none absolute z-20 w-16 -translate-x-1/2 -translate-y-2/3"
       style={{ left: `calc(${position.x}% ${offset})`, top: position.y }}
     >
-      <Goose outfit={outfit} className="w-16 animate-goose-bob drop-shadow-md" />
+      <Goose outfit={outfit} className="w-16 animate-goose-bob drop-shadow-lg" />
     </div>
   );
 }
@@ -38,31 +35,35 @@ function GooseMarker({ position, outfit }: { position: NodePosition; outfit: str
 export function WorldMap({ progress }: { progress: Progress }) {
   const [openWeek, setOpenWeek] = useState<number | null>(null);
   const currentRef = useRef<HTMLDivElement>(null);
-  const current = currentLevelIndex(progress, LEVELS);
+  const map = useMemo(() => buildMap(WEEKS, progress), [progress]);
+  const layout = useMemo(() => layoutMap(map), [map]);
+  const worldIndex = useMemo(() => new Map(map.worlds.map((world) => [world.id, world.index])), [map]);
+  const current = currentLevelIndex(progress, map.levels);
+  const topWorld = map.worlds.length - 1;
 
   useEffect(() => {
     currentRef.current?.scrollIntoView({ block: "center" });
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: LAYOUT.height }}>
-      {LAYOUT.worlds.map((world) => (
-        <WorldBand key={world.week} world={world} onShowWords={() => setOpenWeek(world.week)} />
+    <div className="relative w-full overflow-hidden" style={{ height: layout.height }}>
+      {layout.worlds.map((area) => (
+        <WorldBand key={area.world.id} area={area} isTop={area.world.index === topWorld} onShowWords={setOpenWeek} />
       ))}
-      <MapPath nodes={LAYOUT.nodes} height={LAYOUT.height} reached={current} />
-      {LEVELS.map((level, index) => (
+      <MapPath nodes={layout.nodes} height={layout.height} reached={current} />
+      {map.levels.map((level, index) => (
         <LevelNode
           key={level.key}
           ref={index === current ? currentRef : undefined}
           level={level}
-          position={LAYOUT.nodes[index]}
-          state={nodeState(progress, index)}
+          position={layout.nodes[index]}
+          state={nodeState(progress, { levels: map.levels, index })}
           isCurrent={index === current}
           stars={progress.stars[level.key] ?? 0}
-          theme={themeFor(WORLD_INDEX.get(level.week) ?? 0)}
+          theme={themeFor(worldIndex.get(level.worldId) ?? 0)}
         />
       ))}
-      <GooseMarker position={LAYOUT.nodes[current]} outfit={progress.outfit} />
+      <GooseMarker position={layout.nodes[current]} outfit={progress.outfit} />
       {openWeek !== null && <WordListSheet week={openWeek} onClose={() => setOpenWeek(null)} />}
     </div>
   );

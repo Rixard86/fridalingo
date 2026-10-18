@@ -1,4 +1,4 @@
-import type { Level } from "./levels";
+import type { GameMap, World } from "./levels";
 
 export const LEVEL_SPACING = 130;
 export const BANNER_HEIGHT = 120;
@@ -16,8 +16,7 @@ export interface NodePosition {
 }
 
 export interface WorldArea {
-  week: number;
-  index: number;
+  world: World;
   top: number;
   height: number;
 }
@@ -29,35 +28,33 @@ export interface MapLayout {
 }
 
 interface WorldSpan {
-  week: number;
-  index: number;
+  world: World;
   start: number;
   end: number;
 }
 
-export function layoutMap(levels: Level[]): MapLayout {
-  const weeks = [...new Set(levels.map((level) => level.week))];
+export function layoutMap(map: GameMap): MapLayout {
   const fromBottom: number[] = [];
   let cursor = BOTTOM_PADDING;
-  const spans: WorldSpan[] = weeks.map((week, index) => {
+  const spans: WorldSpan[] = map.worlds.map((world) => {
     const start = cursor;
     cursor += BANNER_HEIGHT;
-    levels.forEach((level, levelIndex) => {
-      if (level.week !== week) return;
+    map.levels.forEach((level, levelIndex) => {
+      if (level.worldId !== world.id) return;
       fromBottom[levelIndex] = cursor + NODE_CENTER_OFFSET;
       cursor += LEVEL_SPACING;
     });
-    return { week, index, start, end: cursor };
+    return { world, start, end: cursor };
   });
   const height = cursor + TOP_PADDING;
   const lastIndex = spans.length - 1;
   return {
     height,
-    nodes: levels.map((_, index) => ({ x: X_PATTERN[index % X_PATTERN.length], y: height - fromBottom[index] })),
-    worlds: spans.map((span) => {
-      const bottom = span.index === 0 ? 0 : span.start;
-      const top = span.index === lastIndex ? height : span.end;
-      return { week: span.week, index: span.index, top: height - top, height: top - bottom };
+    nodes: map.levels.map((_, index) => ({ x: X_PATTERN[index % X_PATTERN.length], y: height - fromBottom[index] })),
+    worlds: spans.map((span, index) => {
+      const bottom = index === 0 ? 0 : span.start;
+      const top = index === lastIndex ? height : span.end;
+      return { world: span.world, top: height - top, height: top - bottom };
     }),
   };
 }

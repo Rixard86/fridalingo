@@ -7,6 +7,7 @@ interface FeedbackBarProps {
   correct: boolean;
   solution: string;
   combo: number;
+  headline?: string;
   onContinue: () => void;
 }
 
@@ -22,8 +23,8 @@ function useEnterToContinue(onContinue: () => void) {
   }, [onContinue]);
 }
 
-export function FeedbackBar({ correct, solution, combo, onContinue }: FeedbackBarProps) {
-  const [headline] = useState(() => (correct ? comboCheer(combo) ?? pickOne(PRAISE) : pickOne(COMFORT)));
+export function FeedbackBar({ correct, solution, combo, headline: fixedHeadline, onContinue }: FeedbackBarProps) {
+  const [headline] = useState(() => fixedHeadline ?? (correct ? comboCheer(combo) ?? pickOne(PRAISE) : pickOne(COMFORT)));
   useEnterToContinue(onContinue);
 
   return (

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Ref } from "react";
 import type { Level } from "@/lib/levels";
-import { LESSON_TITLES } from "@/lib/lessons";
 import type { NodePosition } from "@/lib/mapLayout";
 import { MAX_STARS } from "@/lib/progress";
 import type { WorldTheme } from "./themes";
@@ -44,16 +43,17 @@ export function LevelNode(props: LevelNodeProps) {
     <>
       {state === "done" && <StarRow stars={stars} />}
       <span
-        className={`flex items-center justify-center rounded-full border-b-[6px] font-black shadow-md ${
+        className={`relative flex items-center justify-center rounded-full border-b-[6px] font-black shadow-lg ${
           isBoss ? "h-24 w-24 text-4xl" : "h-[72px] w-[72px] text-2xl"
         } ${circle.className}`}
         style={circle.style}
       >
+        <span className="pointer-events-none absolute top-2 left-1/2 h-3 w-1/2 -translate-x-1/2 rounded-full bg-white/40" />
         {state === "locked" ? "🔒" : isBoss ? "👑" : level.number}
       </span>
       <span className="absolute top-full mt-1 rounded-full bg-white/85 px-2 text-xs font-extrabold whitespace-nowrap text-ink">
         {isBoss ? `Bana ${level.number} · ` : ""}
-        {LESSON_TITLES[level.kind]}
+        {level.title}
       </span>
     </>
   );
@@ -66,7 +66,7 @@ export function LevelNode(props: LevelNodeProps) {
       {state === "locked" ? (
         <div className="relative flex flex-col items-center">{content}</div>
       ) : (
-        <Link href={`/lektion/${level.week}/${level.kind}`} aria-label={`Bana ${level.number}`} className="relative flex flex-col items-center transition active:translate-y-0.5">
+        <Link href={level.href} aria-label={`Bana ${level.number}`} className="relative flex flex-col items-center transition active:translate-y-0.5">
           {content}
         </Link>
       )}

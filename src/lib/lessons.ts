@@ -24,6 +24,7 @@ export interface LessonContext {
   words: Word[];
   pool: Word[];
   random: RandomSource;
+  count?: number;
 }
 
 interface ChoiceSetup {
@@ -123,5 +124,5 @@ export function pickReviewWords(pendingReviews: Record<string, number>, context:
     context.pool.filter((word) => !weak.includes(word)),
     context.random,
   );
-  return shuffle([...weak, ...others].slice(0, REVIEW_SIZE), context.random);
+  return shuffle([...weak, ...others].slice(0, context.count ?? REVIEW_SIZE), context.random);
 }

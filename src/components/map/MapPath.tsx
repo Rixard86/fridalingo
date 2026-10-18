@@ -30,8 +30,9 @@ export function MapPath({ nodes, height, reached }: MapPathProps) {
       aria-hidden
     >
       <g fill="none" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke">
-        <path d={fullPath} stroke="rgba(255,255,255,0.85)" strokeWidth="26" vectorEffect="non-scaling-stroke" />
-        <path d={fullPath} stroke="rgba(0,0,0,0.12)" strokeWidth="5" strokeDasharray="1 14" vectorEffect="non-scaling-stroke" />
+        <path d={fullPath} stroke="rgba(90,60,30,0.18)" strokeWidth="34" vectorEffect="non-scaling-stroke" />
+        <path d={fullPath} stroke="#fff6e3" strokeWidth="26" vectorEffect="non-scaling-stroke" />
+        <path d={fullPath} stroke="#ead7ae" strokeWidth="5" strokeDasharray="1 14" vectorEffect="non-scaling-stroke" />
         <path d={reachedPath} stroke="#ffc800" strokeWidth="8" vectorEffect="non-scaling-stroke" />
       </g>
     </svg>

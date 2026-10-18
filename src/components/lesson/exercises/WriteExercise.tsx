@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { answersFor, fillBlank, isAcceptedAnswer, promptFor, sentenceParts } from "@/lib/answers";
+import { answersFor, isAcceptedAnswer, promptFor, sentenceParts, solutionFor } from "@/lib/answers";
 import { speak } from "@/lib/client/speech";
 import type { Exercise } from "@/lib/types";
 import { CheckBar, ExerciseTitle, SpeakButton, type ExerciseProps } from "./shared";
@@ -11,13 +11,6 @@ type WritingExercise = Extract<Exercise, { kind: WriteKind }>;
 
 function expectedAnswers(exercise: WritingExercise): string[] {
   return exercise.kind === "write" ? answersFor(exercise.word, exercise.direction) : exercise.word.en;
-}
-
-function solutionFor(exercise: WritingExercise): string {
-  if (exercise.kind === "sentence" && exercise.word.sentence) {
-    return fillBlank(exercise.word.sentence.en, exercise.word.en[0]);
-  }
-  return expectedAnswers(exercise).join(" / ");
 }
 
 function SentencePrompt({ exercise }: { exercise: WritingExercise }) {
