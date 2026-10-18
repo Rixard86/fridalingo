@@ -5,7 +5,7 @@ En Duolingo-klon för veckans engelska glosor, med en vit tecknad gås som masko
 - Varje vecka får tre lektioner: **Lär dig** (flerval och para ihop), **Stava** (skriva och lyssna) och **Meningar** (fyll i de understrukna orden i en mening).
 - **Repetera** blandar ord från alla veckor, och de ord man svarat fel på kommer först.
 - XP, nivåer, dagsmål, dagssvit, kombo-räknare, märken och gåskläder som låses upp med nivåer.
-- Framstegen sparas i en databas och följer med mellan enheter.
+- Varje spelare skapar ett eget konto med eget användarnamn och lösenord. Framstegen sparas i en databas och följer med mellan enheter.
 
 ## Nya glosor varje vecka
 
@@ -19,12 +19,10 @@ Glosorna ligger i `src/data/glosor/vNN.json`.
 
 1. Gå till [vercel.com/new](https://vercel.com/new), logga in med GitHub och importera repot `Rixard86/fridalingo`. Döp projektet till `fridalingo`.
 2. Lägg till en databas: i projektet, gå till **Storage** → **Create Database** → **Upstash for Redis** (gratisplanen räcker) och koppla den till projektet. Då skapas `KV_REST_API_URL` och `KV_REST_API_TOKEN` automatiskt.
-3. Under **Settings** → **Environment Variables**, lägg till:
-   - `FAMILY_PASSWORD`: lösenordet för att logga in i appen.
-   - `SESSION_SECRET`: en lång slumpsträng. Skapa en med `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`.
+3. Under **Settings** → **Environment Variables**, lägg till `SESSION_SECRET` (typ Secret): en lång slumpsträng. Skapa en med `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`.
 4. Gör en ny deploy (**Deployments** → **Redeploy**).
 
-Den som loggar in skriver sitt namn och familjelösenordet. Varje namn får egna framsteg, så syskon kan också spela.
+Nya spelare väljer **Ny spelare** och skapar ett konto med eget användarnamn och lösenord. Lösenorden sparas som scrypt-hashar, aldrig i klartext. Det finns ingen återställning av glömda lösenord: ta bort nyckeln `user:<användarnamn>` i Upstash-konsolen så kan kontot skapas igen (framstegen ligger kvar under `progress:<användarnamn>`).
 
 ## Utveckling
 
@@ -33,6 +31,6 @@ npm install
 npm run dev
 ```
 
-Skapa `.env.local` med `FAMILY_PASSWORD` och `SESSION_SECRET` för lokal körning. Utan Redis-variablerna sparas framstegen i minnet medan dev-servern kör.
+Skapa `.env.local` med `SESSION_SECRET` för lokal körning. Utan Redis-variablerna sparas konton och framsteg i minnet medan dev-servern kör.
 
 `npm run check` kör lint, typkontroll och tester.

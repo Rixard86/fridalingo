@@ -18,8 +18,10 @@ export async function fetchAccount(): Promise<Account | null> {
   return response?.ok ? response.json() : null;
 }
 
-export async function postLogin(credentials: Credentials): Promise<string | null> {
-  const response = await fetch("/api/login", {
+export type AuthMode = "login" | "signup";
+
+export async function postCredentials(mode: AuthMode, credentials: Credentials): Promise<string | null> {
+  const response = await fetch(`/api/${mode}`, {
     method: "POST",
     headers: JSON_HEADERS,
     body: JSON.stringify(credentials),

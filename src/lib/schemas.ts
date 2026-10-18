@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-const MAX_NAME_LENGTH = 30;
+export const MAX_NAME_LENGTH = 30;
+export const MIN_PASSWORD_LENGTH = 4;
+const MAX_PASSWORD_LENGTH = 100;
 const DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const count = z.number().int().nonnegative();
@@ -18,7 +20,21 @@ export const progressSchema = z.object({
   outfit: z.string().nullable(),
 });
 
+const username = z
+  .string()
+  .trim()
+  .min(1, "Skriv ditt användarnamn")
+  .max(MAX_NAME_LENGTH, `Användarnamnet får vara högst ${MAX_NAME_LENGTH} tecken`);
+
 export const loginSchema = z.object({
-  name: z.string().trim().min(1).max(MAX_NAME_LENGTH),
-  password: z.string().min(1),
+  name: username,
+  password: z.string().min(1, "Skriv ditt lösenord").max(MAX_PASSWORD_LENGTH),
+});
+
+export const signupSchema = z.object({
+  name: username,
+  password: z
+    .string()
+    .min(MIN_PASSWORD_LENGTH, `Lösenordet måste vara minst ${MIN_PASSWORD_LENGTH} tecken`)
+    .max(MAX_PASSWORD_LENGTH, `Lösenordet får vara högst ${MAX_PASSWORD_LENGTH} tecken`),
 });

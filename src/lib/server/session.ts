@@ -7,6 +7,7 @@ const ONE_YEAR_IN_SECONDS = 31_536_000;
 
 export const HTTP_BAD_REQUEST = 400;
 export const HTTP_UNAUTHORIZED = 401;
+export const HTTP_CONFLICT = 409;
 
 export async function readSessionName(): Promise<string | null> {
   const token = (await cookies()).get(SESSION_COOKIE)?.value;

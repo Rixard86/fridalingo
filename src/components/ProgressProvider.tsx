@@ -1,7 +1,15 @@
 "use client";
 
 import { createContext, use, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { fetchAccount, postLogin, postLogout, putProgress, type Account, type Credentials } from "@/lib/client/api";
+import {
+  fetchAccount,
+  postCredentials,
+  postLogout,
+  putProgress,
+  type Account,
+  type AuthMode,
+  type Credentials,
+} from "@/lib/client/api";
 import type { Progress } from "@/lib/types";
 
 type Session =
@@ -11,7 +19,7 @@ type Session =
 
 interface ProgressContextValue {
   session: Session;
-  login: (credentials: Credentials) => Promise<string | null>;
+  authenticate: (mode: AuthMode, credentials: Credentials) => Promise<string | null>;
   logout: () => Promise<void>;
   updateProgress: (progress: Progress) => Promise<void>;
 }
@@ -35,8 +43,8 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const login = useCallback(async (credentials: Credentials) => {
-    const error = await postLogin(credentials);
+  const authenticate = useCallback(async (mode: AuthMode, credentials: Credentials) => {
+    const error = await postCredentials(mode, credentials);
     if (!error) setSession(sessionFrom(await fetchAccount()));
     return error;
   }, []);
@@ -53,8 +61,8 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ session, login, logout, updateProgress }),
-    [session, login, logout, updateProgress],
+    () => ({ session, authenticate, logout, updateProgress }),
+    [session, authenticate, logout, updateProgress],
   );
   return <ProgressContext value={value}>{children}</ProgressContext>;
 }
