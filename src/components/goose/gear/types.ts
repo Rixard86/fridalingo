@@ -1,8 +1,8 @@
-import type { GoosePaint } from "../GooseDefs";
+import type { Pose } from "../poses";
 
 export interface GearContext {
-  paint: GoosePaint;
   prefix: string;
+  pose: Pose;
 }
 
-export type GearLayer = "ground" | "hood" | "torso" | "neck" | "helmet" | "face" | "head";
+export type GearLayer = "ground" | "torso" | "neck" | "head";
