@@ -1,0 +1,25 @@
+{
+  "week": 39,
+  "words": [
+    { "en": ["Cupboard"], "sv": ["Skåp"] },
+    {
+      "en": ["Hurts"],
+      "sv": ["Gör ont"],
+      "sentence": { "en": "My knee ___ after I fell.", "sv": "Mitt knä gör ont efter att jag ramlade." }
+    },
+    { "en": ["Crawls"], "sv": ["Kryper"] },
+    { "en": ["Curly"], "sv": ["Lockig"] },
+    { "en": ["Backpack"], "sv": ["Ryggsäck"] },
+    { "en": ["Schoolyard"], "sv": ["Skolgård"] },
+    { "en": ["Beard"], "sv": ["Skägg"] },
+    {
+      "en": ["Glasses"],
+      "sv": ["Glasögon"],
+      "sentence": { "en": "My teacher wears ___.", "sv": "Min lärare har glasögon." }
+    },
+    { "en": ["Straight"], "sv": ["Rakt"] },
+    { "en": ["Lesson"], "sv": ["Lektion"] },
+    { "en": ["Page"], "sv": ["Sida"] },
+    { "en": ["Exercise"], "sv": ["Övning"] }
+  ]
+}

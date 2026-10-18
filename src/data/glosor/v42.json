@@ -1,0 +1,29 @@
+{
+  "week": 42,
+  "words": [
+    { "en": ["I am"], "sv": ["Jag är"] },
+    { "en": ["You are"], "sv": ["Du är", "Ni är"] },
+    {
+      "en": ["He is"],
+      "sv": ["Han är"],
+      "sentence": { "en": "___ my best friend.", "sv": "Han är min bästa vän." }
+    },
+    { "en": ["She is"], "sv": ["Hon är"] },
+    { "en": ["It is"], "sv": ["Det är"] },
+    { "en": ["They are"], "sv": ["De är"] },
+    { "en": ["We are"], "sv": ["Vi är"] },
+    { "en": ["Who?"], "sv": ["Vem?"] },
+    { "en": ["What?"], "sv": ["Vad?"] },
+    {
+      "en": ["When?"],
+      "sv": ["När?"],
+      "sentence": { "en": "___ does the film start?", "sv": "När börjar filmen?" }
+    },
+    { "en": ["How?"], "sv": ["Hur?"] },
+    {
+      "en": ["Where?"],
+      "sv": ["Var?"],
+      "sentence": { "en": "___ is my backpack?", "sv": "Var är min ryggsäck?" }
+    }
+  ]
+}

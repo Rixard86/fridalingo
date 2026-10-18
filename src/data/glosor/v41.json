@@ -1,0 +1,29 @@
+{
+  "week": 41,
+  "words": [
+    { "en": ["Trousers"], "sv": ["Byxor"] },
+    { "en": ["Cardigan"], "sv": ["Kofta", "Tröja"] },
+    {
+      "en": ["Slippers"],
+      "sv": ["Tofflor"],
+      "sentence": { "en": "I wear my ___ at home.", "sv": "Jag har mina tofflor på mig hemma." }
+    },
+    { "en": ["Trainers"], "sv": ["Gymnastikskor"] },
+    { "en": ["Scarf"], "sv": ["Halsduk"] },
+    { "en": ["Skirt"], "sv": ["Kjol"] },
+    { "en": ["Coat"], "sv": ["Kappa"] },
+    { "en": ["Chews"], "sv": ["Tuggar"] },
+    { "en": ["Purse"], "sv": ["Handväska"] },
+    {
+      "en": ["Dinner"],
+      "sv": ["Middag"],
+      "sentence": { "en": "We eat ___ at six o'clock.", "sv": "Vi äter middag klockan sex." }
+    },
+    { "en": ["Clears the table"], "sv": ["Dukar av"] },
+    {
+      "en": ["Do the dishes"],
+      "sv": ["Diska"],
+      "sentence": { "en": "I help my dad ___ after dinner.", "sv": "Jag hjälper pappa att diska efter middagen." }
+    }
+  ]
+}

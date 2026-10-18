@@ -1,0 +1,29 @@
+{
+  "week": 43,
+  "words": [
+    { "en": ["Live"], "sv": ["Bor"] },
+    { "en": ["Age"], "sv": ["Ålder"] },
+    {
+      "en": ["Name"],
+      "sv": ["Namn"],
+      "sentence": { "en": "My ___ is Sam.", "sv": "Mitt namn är Sam." }
+    },
+    { "en": ["Family"], "sv": ["Familj"] },
+    { "en": ["Friend"], "sv": ["Vän", "Kompis"] },
+    { "en": ["Like"], "sv": ["Tycker om", "Gillar"] },
+    { "en": ["Favourite"], "sv": ["Favorit"] },
+    { "en": ["Color", "Colour"], "sv": ["Färg"] },
+    { "en": ["Animal"], "sv": ["Djur"] },
+    {
+      "en": ["School"],
+      "sv": ["Skola"],
+      "sentence": { "en": "I walk to ___ every day.", "sv": "Jag går till skolan varje dag." }
+    },
+    { "en": ["Happy"], "sv": ["Glad"] },
+    {
+      "en": ["Old"],
+      "sv": ["Gammal"],
+      "sentence": { "en": "I am ten years ___.", "sv": "Jag är tio år gammal." }
+    }
+  ]
+}

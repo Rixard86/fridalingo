@@ -1,0 +1,25 @@
+{
+  "week": 40,
+  "words": [
+    { "en": ["Nightmare"], "sv": ["Mardröm"] },
+    {
+      "en": ["Feels"],
+      "sv": ["Känner sig"],
+      "sentence": { "en": "She ___ happy today.", "sv": "Hon känner sig glad i dag." }
+    },
+    { "en": ["Tired"], "sv": ["Trött"] },
+    { "en": ["Polite"], "sv": ["Artig"] },
+    { "en": ["Quiet"], "sv": ["Tyst"] },
+    { "en": ["Thrilled"], "sv": ["Överlycklig"] },
+    { "en": ["Terrified"], "sv": ["Skräckslagen"] },
+    {
+      "en": ["Nervous"],
+      "sv": ["Nervös"],
+      "sentence": { "en": "I am ___ before the test.", "sv": "Jag är nervös inför provet." }
+    },
+    { "en": ["Calm"], "sv": ["Lugn"] },
+    { "en": ["Relieved"], "sv": ["Lättad"] },
+    { "en": ["Luck"], "sv": ["Tur"] },
+    { "en": ["Crazy"], "sv": ["Tokig"] }
+  ]
+}

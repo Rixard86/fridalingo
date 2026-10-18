@@ -1,0 +1,25 @@
+{
+  "week": 38,
+  "words": [
+    {
+      "en": ["Parents"],
+      "sv": ["Föräldrar"],
+      "sentence": { "en": "My ___ make dinner every evening.", "sv": "Mina föräldrar lagar middag varje kväll." }
+    },
+    { "en": ["Kitchen"], "sv": ["Kök"] },
+    { "en": ["Candle"], "sv": ["Stearinljus"] },
+    { "en": ["Fireplace"], "sv": ["Öppen spis"] },
+    { "en": ["None"], "sv": ["Ingen"] },
+    { "en": ["Stairs"], "sv": ["Trappan"] },
+    { "en": ["Someone"], "sv": ["Någon"] },
+    { "en": ["Upset"], "sv": ["Upprörd"] },
+    {
+      "en": ["Curtains"],
+      "sv": ["Gardiner"],
+      "sentence": { "en": "Please close the ___.", "sv": "Snälla, dra för gardinerna." }
+    },
+    { "en": ["Unpack"], "sv": ["Packa upp"] },
+    { "en": ["Grabs"], "sv": ["Tar tag i"] },
+    { "en": ["Different"], "sv": ["Annorlunda"] }
+  ]
+}

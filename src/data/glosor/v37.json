@@ -1,0 +1,25 @@
+{
+  "week": 37,
+  "words": [
+    {
+      "en": ["Lightning"],
+      "sv": ["Blixt"],
+      "sentence": { "en": "The ___ lit up the dark sky.", "sv": "Blixten lyste upp den mörka himlen." }
+    },
+    { "en": ["Guest house"], "sv": ["Gästhus"] },
+    { "en": ["Apartment"], "sv": ["Lägenhet"] },
+    { "en": ["Wall"], "sv": ["Vägg"] },
+    { "en": ["Suddenly"], "sv": ["Plötsligt"] },
+    { "en": ["Forehead"], "sv": ["Panna"] },
+    { "en": ["Cotton dress"], "sv": ["Bomullsklänning"] },
+    { "en": ["Barefoot"], "sv": ["Barfota"] },
+    {
+      "en": ["Garden"],
+      "sv": ["Trädgård"],
+      "sentence": { "en": "We have an apple tree in our ___.", "sv": "Vi har ett äppelträd i vår trädgård." }
+    },
+    { "en": ["Daughter"], "sv": ["Dotter"] },
+    { "en": ["Bookcase"], "sv": ["Bokhylla"] },
+    { "en": ["Furniture"], "sv": ["Möbler"] }
+  ]
+}
