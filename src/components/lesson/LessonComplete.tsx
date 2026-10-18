@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Goose } from "@/components/goose/Goose";
 import { useAccount } from "@/components/ProgressProvider";
 import { celebrate } from "@/lib/client/celebrate";
@@ -63,7 +63,11 @@ export function LessonComplete({ result }: { result: LessonResult }) {
   const levelUp = levelFor(after.xp) > levelFor(before.xp);
   const goalJustReached = todaysXp(before, today) < DAILY_GOAL_XP && after.dailyXp >= DAILY_GOAL_XP;
 
+  const saved = useRef(false);
+
   useEffect(() => {
+    if (saved.current) return;
+    saved.current = true;
     void updateProgress(report.progress);
     celebrate();
     playFanfare();

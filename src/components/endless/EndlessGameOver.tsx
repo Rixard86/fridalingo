@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Goose } from "@/components/goose/Goose";
 import { useAccount } from "@/components/ProgressProvider";
 import { celebrate } from "@/lib/client/celebrate";
@@ -17,7 +17,11 @@ export function EndlessGameOver({ state, onRestart }: { state: EndlessState; onR
   const [report] = useState(() => applyEndlessResult(progress, { state, today }));
   const newRecord = state.score > previousRecord;
 
+  const saved = useRef(false);
+
   useEffect(() => {
+    if (saved.current) return;
+    saved.current = true;
     void updateProgress(report.progress);
     if (newRecord) {
       celebrate();

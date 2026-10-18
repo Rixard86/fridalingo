@@ -1,6 +1,7 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { Fragment, type ReactNode } from "react";
 import { Goose } from "./goose/Goose";
 import { LoginScreen } from "./LoginScreen";
 import { useProgressContext } from "./ProgressProvider";
@@ -16,7 +17,8 @@ export function LoadingScreen() {
 
 export function RequireLogin({ children }: { children: ReactNode }) {
   const { session } = useProgressContext();
+  const { bfcacheId } = useRouter();
   if (session.status === "loading") return <LoadingScreen />;
   if (session.status === "loggedOut") return <LoginScreen />;
-  return children;
+  return <Fragment key={bfcacheId}>{children}</Fragment>;
 }
