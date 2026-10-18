@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { newlyEarnedBadges } from "./badges";
-import { equipOutfit } from "./outfits";
+import { chooseLook, wornLook } from "./outfits";
 import { emptyProgress } from "./progress";
 import { mapLevelsDone, scoresFor, totalStars, worldsDone } from "./scores";
 import type { Progress } from "./types";
@@ -48,16 +48,21 @@ describe("new badges", () => {
   });
 });
 
-describe("equipping outfits", () => {
-  it("lets the goose wear items in different slots together", () => {
-    expect(equipOutfit(equipOutfit(["keps"], "solglasogon"), "skateboard")).toEqual(["keps", "solglasogon", "skateboard"]);
+describe("looks", () => {
+  it("wears the scarf by default", () => {
+    expect(wornLook(emptyProgress())).toBe("halsduk");
   });
 
-  it("swaps items in the same slot", () => {
-    expect(equipOutfit(["keps", "solglasogon"], "krona")).toEqual(["solglasogon", "krona"]);
+  it("wears one chosen look at a time", () => {
+    expect(wornLook(chooseLook(chooseLook(emptyProgress(), "keps"), "krona"))).toBe("krona");
   });
 
-  it("takes an item off when tapped again", () => {
-    expect(equipOutfit(["keps", "solglasogon"], "keps")).toEqual(["solglasogon"]);
+  it("takes the look off when tapped again", () => {
+    expect(wornLook(chooseLook(chooseLook(emptyProgress(), "keps"), "keps"))).toBeNull();
+    expect(wornLook(chooseLook(emptyProgress(), "halsduk"))).toBeNull();
+  });
+
+  it("keeps the last item from outfits saved before looks", () => {
+    expect(wornLook({ ...emptyProgress(), outfits: ["keps", "solglasogon"] })).toBe("solglasogon");
   });
 });

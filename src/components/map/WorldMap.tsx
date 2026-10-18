@@ -11,6 +11,7 @@ import { MapPath } from "./MapPath";
 import { themeFor } from "./themes";
 import { WordListSheet } from "./WordListSheet";
 import { WorldBand } from "./WorldBand";
+import { wornLook } from "@/lib/outfits";
 
 const MAP_CENTER = 50;
 const GOOSE_OFFSET_PX = 72;
@@ -20,7 +21,7 @@ function nodeState(progress: Progress, position: { levels: Level[]; index: numbe
   return isLevelUnlocked(progress, position) ? "open" : "locked";
 }
 
-function GooseMarker({ position, outfits }: { position: NodePosition; outfits: string[] }) {
+function GooseMarker({ position, look }: { position: NodePosition; look: string | null }) {
   const onLeft = position.x > MAP_CENTER;
   const offset = onLeft ? `- ${GOOSE_OFFSET_PX}px` : `+ ${GOOSE_OFFSET_PX}px`;
   return (
@@ -29,7 +30,7 @@ function GooseMarker({ position, outfits }: { position: NodePosition; outfits: s
       style={{ left: `calc(${position.x}% ${offset})`, top: position.y }}
     >
       <div className={onLeft ? "-scale-x-100" : undefined}>
-        <Goose outfits={outfits} className="w-16 animate-goose-bob drop-shadow-lg" />
+        <Goose look={look} className="w-16 animate-goose-bob drop-shadow-lg" />
       </div>
     </div>
   );
@@ -66,7 +67,7 @@ export function WorldMap({ progress }: { progress: Progress }) {
           theme={themeFor(worldIndex.get(level.worldId) ?? 0)}
         />
       ))}
-      <GooseMarker position={layout.nodes[current]} outfits={progress.outfits} />
+      <GooseMarker position={layout.nodes[current]} look={wornLook(progress)} />
       {openWeek !== null && <WordListSheet week={openWeek} onClose={() => setOpenWeek(null)} />}
     </div>
   );

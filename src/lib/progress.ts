@@ -36,6 +36,7 @@ export function emptyProgress(): Progress {
     bestCombo: 0,
     badges: [],
     outfits: [],
+    scarfOff: false,
     stars: {},
     endlessRecord: 0,
   };

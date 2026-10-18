@@ -47,6 +47,7 @@ export interface Progress {
   bestCombo: number;
   badges: string[];
   outfits: string[];
+  scarfOff: boolean;
   stars: Record<string, number>;
   endlessRecord: number;
 }

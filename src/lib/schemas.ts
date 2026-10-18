@@ -18,6 +18,7 @@ export const progressSchema = z.object({
   bestCombo: count,
   badges: z.array(z.string()),
   outfits: z.array(z.string()).default([]),
+  scarfOff: z.boolean().default(false),
   stars: z.record(z.string(), count).default({}),
   endlessRecord: count.default(0),
 });

@@ -1,29 +1,28 @@
 import { levelFor } from "./rewards";
-
-export type OutfitSlot = "head" | "eyes" | "neck" | "body" | "feet";
+import type { Progress } from "./types";
 
 export interface Outfit {
   id: string;
   name: string;
   level: number;
-  slot: OutfitSlot;
 }
 
-export const OUTFITS: Outfit[] = [
-  { id: "keps", name: "Bakvänd keps", level: 2, slot: "head" },
-  { id: "solglasogon", name: "Solglasögon", level: 3, slot: "eyes" },
-  { id: "fluga", name: "Fluga", level: 4, slot: "neck" },
-  { id: "ninjaband", name: "Ninjaband", level: 5, slot: "head" },
-  { id: "partyhatt", name: "Partyhatt", level: 6, slot: "head" },
-  { id: "skateboard", name: "Skateboard", level: 7, slot: "feet" },
-  { id: "krona", name: "Krona", level: 8, slot: "head" },
-  { id: "guldkedja", name: "Guldkedja", level: 9, slot: "neck" },
-  { id: "hatt", name: "Hatt", level: 10, slot: "head" },
-  { id: "hoodie", name: "Hoodie", level: 12, slot: "body" },
-  { id: "riddarhjalm", name: "Riddarhjälm", level: 15, slot: "head" },
-];
+export const SCARF_ID = "halsduk";
 
-const OUTFIT_BY_ID = new Map(OUTFITS.map((outfit) => [outfit.id, outfit]));
+export const OUTFITS: Outfit[] = [
+  { id: SCARF_ID, name: "Halsduk", level: 1 },
+  { id: "keps", name: "Bakvänd keps", level: 2 },
+  { id: "solglasogon", name: "Solglasögon", level: 3 },
+  { id: "fluga", name: "Fluga", level: 4 },
+  { id: "ninjaband", name: "Ninjaband", level: 5 },
+  { id: "partyhatt", name: "Partyhatt", level: 6 },
+  { id: "skateboard", name: "Skateboard", level: 7 },
+  { id: "krona", name: "Krona", level: 8 },
+  { id: "guldkedja", name: "Guldkedja", level: 9 },
+  { id: "hatt", name: "Hatt", level: 10 },
+  { id: "hoodie", name: "Hoodie", level: 12 },
+  { id: "riddarhjalm", name: "Riddarhjälm", level: 15 },
+];
 
 export function isOutfitUnlocked(outfit: Pick<Outfit, "level">, xp: number): boolean {
   return levelFor(xp) >= outfit.level;
@@ -39,8 +38,13 @@ export function newlyUnlockedOutfits(previousXp: number, currentXp: number): Out
   );
 }
 
-export function equipOutfit(equipped: string[], id: string): string[] {
-  if (equipped.includes(id)) return equipped.filter((item) => item !== id);
-  const slot = OUTFIT_BY_ID.get(id)?.slot;
-  return [...equipped.filter((item) => OUTFIT_BY_ID.get(item)?.slot !== slot), id];
+type Wardrobe = Pick<Progress, "outfits" | "scarfOff">;
+
+export function wornLook(wardrobe: Wardrobe): string | null {
+  return wardrobe.outfits.at(-1) ?? (wardrobe.scarfOff ? null : SCARF_ID);
+}
+
+export function chooseLook<T extends Wardrobe>(wardrobe: T, id: string): T {
+  if (wornLook(wardrobe) === id) return { ...wardrobe, outfits: [], scarfOff: true };
+  return { ...wardrobe, outfits: [id], scarfOff: false };
 }
