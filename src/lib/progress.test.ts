@@ -9,7 +9,8 @@ import {
   todaysXp,
   updatePendingReviews,
 } from "./progress";
-import { levelFor, newlyUnlockedOutfits } from "./rewards";
+import { newlyUnlockedOutfits } from "./outfits";
+import { levelFor } from "./rewards";
 import type { LessonResult } from "./types";
 
 const TODAY = "2026-10-18";

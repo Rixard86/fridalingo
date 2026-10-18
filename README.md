@@ -7,6 +7,7 @@ En Duolingo-klon för veckans engelska glosor, med en vit tecknad gås som masko
 - Kartan tar aldrig slut: efter senaste veckan fortsätter den med mixvärldar som blandar ord från alla veckor, och svåra ord kommer oftare.
 - När en ny vecka läggs in hamnar dess värld direkt efter spelarens senast klarade bana. Klarade banor, nummer och stjärnor ändras aldrig, och en ny oändlig mixström startar efter den nya veckan.
 - **Endless**: ord efter ord från alla veckor med 3 hjärtan, en timer som blir kortare och ett personligt rekord.
+- **Topplista** för nivå, karta och Endless, 26 märken och 11 kombinerbara gåsgrejer (keps, solglasögon, hoodie, skateboard och mer).
 - **Repetera** blandar ord från alla veckor, och de ord man svarat fel på kommer först.
 - XP, nivåer, dagsmål, dagssvit, kombo-räknare, märken och gåskläder som låses upp med nivåer.
 - Varje spelare skapar ett eget konto med eget användarnamn och lösenord. Framstegen sparas i en databas och följer med mellan enheter.

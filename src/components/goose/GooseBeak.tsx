@@ -2,32 +2,50 @@ import { BEAK_DARK, BEAK_TIP } from "./colors";
 import type { GoosePaint } from "./GooseDefs";
 import type { GooseMood } from "./Goose";
 
+const MOUTHS: Record<Exclude<GooseMood, "cheer">, string> = {
+  happy: "M26 56.5 C38 57.5 50 57 62 52.5",
+  sad: "M26 56 C38 57 50 59 62 60",
+  think: "M26 56.5 C38 57 50 57 62 56",
+};
+
 function OpenMouth({ paint }: { paint: GoosePaint }) {
   return (
     <g strokeLinejoin="round">
-      <path d="M85 61 Q100 90 115 61 Q100 69 85 61 Z" fill="#7a1f2b" stroke={BEAK_DARK} strokeWidth="2.5" />
-      <path d="M91 72 Q100 86 109 72 Q100 76 91 72 Z" fill="#ff7a8a" />
-      <path d="M86 66 Q100 94 114 66 Q100 87 86 66 Z" fill={paint.beak} stroke={BEAK_DARK} strokeWidth="2.5" />
+      <path d="M62 56 L25 55 L29 66 C40 69 52 68 62 63 Z" fill="#6e1b27" stroke={BEAK_DARK} strokeWidth="2" />
+      <path d="M57 60 C48 61 40 63 33 64 C41 67 51 66 58 63 Z" fill="#ff7a8a" />
+      <path d="M62 62 C52 67 40 69 29 66 C33 73 52 74 63 67 Z" fill={paint.beak} stroke={BEAK_DARK} strokeWidth="2.6" />
     </g>
   );
 }
 
 function LowerBeak() {
-  return <path d="M88 66 Q100 77 112 66 Q107 73 100 75 Q93 73 88 66 Z" fill="#f08a00" stroke={BEAK_DARK} strokeWidth="2" strokeLinejoin="round" />;
+  return (
+    <path
+      d="M61 55 C49 58 36 60 27 57.5 C33 63 50 65 62 61 Z"
+      fill="#ef8500"
+      stroke={BEAK_DARK}
+      strokeWidth="2.4"
+      strokeLinejoin="round"
+    />
+  );
 }
 
 export function GooseBeak({ mood, paint }: { mood: GooseMood; paint: GoosePaint }) {
   const open = mood === "cheer";
-  const mouth = mood === "sad" ? "M87 64 Q100 60 113 64" : "M86 62 Q100 69 114 62";
   return (
     <g strokeLinecap="round">
       {open ? <OpenMouth paint={paint} /> : <LowerBeak />}
-      <path d="M82 55 Q100 44 118 55 Q116 66 100 71 Q84 66 82 55 Z" fill={paint.beak} stroke={BEAK_DARK} strokeWidth="3" strokeLinejoin="round" />
-      <path d="M90 52 Q100 47.5 110 52" fill="none" stroke="#ffd59a" strokeWidth="2" />
-      <ellipse cx="95" cy="56" rx="1.5" ry="0.9" fill={BEAK_TIP} />
-      <ellipse cx="105" cy="56" rx="1.5" ry="0.9" fill={BEAK_TIP} />
-      <path d="M95.5 68.5 Q100 72 104.5 68.5 Q100 70 95.5 68.5 Z" fill={BEAK_TIP} />
-      {!open && <path d={mouth} fill="none" stroke={BEAK_DARK} strokeWidth="2" />}
+      <path
+        d="M62 42 C49 40 33 42 21 49 C18 51 19 56 25 56 C38 57 51 56 63 56 Z"
+        fill={paint.beak}
+        stroke={BEAK_DARK}
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      <path d="M58 44.5 C47 43.5 36 45 27 48.5" fill="none" stroke="#ffd59a" strokeWidth="2.2" />
+      <ellipse cx="46" cy="48" rx="2.4" ry="1.1" fill={BEAK_TIP} />
+      <path d="M21 49 C18 51 19 55 24 56 C22.5 53.5 23 51 25.5 49 Z" fill={BEAK_TIP} />
+      {!open && <path d={MOUTHS[mood as Exclude<GooseMood, "cheer">]} fill="none" stroke={BEAK_DARK} strokeWidth="2" />}
     </g>
   );
 }

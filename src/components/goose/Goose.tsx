@@ -1,64 +1,86 @@
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import { FEATHER_LINE, FINE_STROKE, OUTLINE, STROKE } from "./colors";
+import type { GearLayer } from "./gear/types";
 import { GooseBeak } from "./GooseBeak";
-import { GooseBody, GooseLegs, GooseShadow } from "./GooseBody";
+import { GooseBody, GooseLegs, GooseShadow, GooseWing } from "./GooseBody";
 import { GooseDefs, paintFor, type GoosePaint } from "./GooseDefs";
 import { GooseEyes } from "./GooseEyes";
-import { GooseOutfit, HAT_OUTFITS } from "./GooseOutfit";
+import { GooseGear, hidesTuft } from "./GooseGear";
 import { GooseScarf } from "./GooseScarf";
 
 export type GooseMood = "happy" | "cheer" | "sad" | "think";
 
 interface GooseProps {
   mood?: GooseMood;
-  outfit?: string | null;
+  outfits?: string[];
   className?: string;
 }
 
 interface HeadProps {
   mood: GooseMood;
-  outfit: string | null;
   paint: GoosePaint;
+  showTuft: boolean;
+  gear: (layer: GearLayer) => ReactNode;
 }
 
 const NON_ALPHANUMERIC = /[^a-zA-Z0-9]/g;
+const SKATE_LIFT = "translate(0 -6)";
+const SHADOW_ON_BOARD = "translate(0 8)";
 
 function Tuft({ paint }: { paint: GoosePaint }) {
   return (
     <g fill={paint.head} stroke={OUTLINE} strokeWidth="3" strokeLinejoin="round">
-      <path d="M95 19 C90 6 97 -1 102 5 C103 -2 111 -2 112 6 C116 2 122 6 116 18 Z" />
-      <path d="M101 7 C101 11 100 14 100 17 M109 7 C108 11 107 14 106 17" fill="none" stroke={FEATHER_LINE} strokeWidth={FINE_STROKE} />
+      <path d="M88 17 C84 6 92 -2 103 -1 C112 0 115 8 110 13 C108 8 103 6 99 8 C96 10 96 13 97 16 Z" />
+      <path d="M93 13 C93 7 98 3 104 3 M99 15 C100 10 104 8 108 9" fill="none" stroke={FEATHER_LINE} strokeWidth={FINE_STROKE} strokeLinecap="round" />
     </g>
   );
 }
 
-function GooseHead({ mood, outfit, paint }: HeadProps) {
-  const showTuft = !outfit || !HAT_OUTFITS.includes(outfit);
+function GooseHead({ mood, paint, showTuft, gear }: HeadProps) {
   return (
     <g>
       {showTuft && <Tuft paint={paint} />}
-      <circle cx="100" cy="46" r="30" fill={paint.head} stroke={OUTLINE} strokeWidth={STROKE} />
-      <ellipse cx="89" cy="29" rx="9" ry="4.5" fill="#ffffff" opacity="0.85" transform="rotate(-20 89 29)" />
-      <ellipse cx="80" cy="58" rx="6.5" ry="4.5" fill={paint.cheek} />
-      <ellipse cx="120" cy="58" rx="6.5" ry="4.5" fill={paint.cheek} />
+      <path
+        d="M56 42 C56 25 68 15 83 15 C98 15 108 27 108 42 C108 57 99 67 86 69 C70 71 56 60 56 42 Z"
+        fill={paint.head}
+        stroke={OUTLINE}
+        strokeWidth={STROKE}
+        strokeLinejoin="round"
+      />
+      <path d="M88 20 C96 22 102 28 104 36" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" opacity="0.9" />
       <GooseEyes mood={mood} paint={paint} />
+      {gear("helmet")}
       <GooseBeak mood={mood} paint={paint} />
+      {gear("face")}
+      {gear("head")}
     </g>
   );
 }
 
-export function Goose({ mood = "happy", outfit = null, className = "" }: GooseProps) {
+export function Goose({ mood = "happy", outfits = [], className = "" }: GooseProps) {
   const prefix = `goose${useId().replace(NON_ALPHANUMERIC, "")}`;
   const paint = paintFor(prefix);
+  const context = { paint, prefix };
+  const hoodie = outfits.includes("hoodie");
+  const skating = outfits.includes("skateboard");
+  const gear = (layer: GearLayer) => <GooseGear outfits={outfits} layer={layer} context={context} />;
   return (
-    <svg viewBox="0 -8 200 228" className={className} role="img" aria-label="Gåsen">
+    <svg viewBox="0 -14 200 240" className={className} role="img" aria-label="Gåsen">
       <GooseDefs prefix={prefix} />
-      <GooseShadow paint={paint} />
-      <GooseLegs paint={paint} />
-      <GooseBody paint={paint} raised={mood === "cheer"} />
-      <GooseScarf paint={paint} />
-      <GooseHead mood={mood} outfit={outfit} paint={paint} />
-      <GooseOutfit outfit={outfit} />
+      <g transform={skating ? SHADOW_ON_BOARD : undefined}>
+        <GooseShadow paint={paint} />
+      </g>
+      {gear("ground")}
+      <g transform={skating ? SKATE_LIFT : undefined}>
+        <GooseLegs paint={paint} />
+        {gear("hood")}
+        <GooseBody paint={paint} hoodie={hoodie} />
+        {gear("torso")}
+        <GooseWing paint={paint} hoodie={hoodie} raised={mood === "cheer"} />
+        <GooseScarf paint={paint} />
+        {gear("neck")}
+        <GooseHead mood={mood} paint={paint} showTuft={!hidesTuft(outfits)} gear={gear} />
+      </g>
     </svg>
   );
 }

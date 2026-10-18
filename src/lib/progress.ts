@@ -1,5 +1,5 @@
 import { previousDayKey } from "./days";
-import { newlyEarnedBadges, type Badge } from "./rewards";
+import { newlyEarnedBadges, type Badge } from "./badges";
 import type { AnswerEvent, LessonResult, Progress } from "./types";
 
 export const LESSON_XP = 10;
@@ -35,7 +35,7 @@ export function emptyProgress(): Progress {
     perfectLessons: 0,
     bestCombo: 0,
     badges: [],
-    outfit: null,
+    outfits: [],
     stars: {},
     endlessRecord: 0,
   };

@@ -1,15 +1,19 @@
-import { Redis } from "@upstash/redis";
+import type { Redis } from "@upstash/redis";
 import { emptyProgress } from "@/lib/progress";
 import type { Progress } from "@/lib/types";
-import { isProduction, redisCredentials } from "./config";
 import type { PasswordRecord } from "./passwords";
+import { redisClient } from "./redis";
 
 export interface UserRecord extends PasswordRecord {
   name: string;
 }
 
+interface StoredProgress extends Partial<Progress> {
+  outfit?: string | null;
+}
+
 interface Store {
-  load: (profile: string) => Promise<Progress | null>;
+  load: (profile: string) => Promise<StoredProgress | null>;
   save: (profile: string, progress: Progress) => Promise<void>;
   loadUser: (profile: string) => Promise<UserRecord | null>;
   createUser: (profile: string, user: UserRecord) => Promise<boolean>;
@@ -41,7 +45,7 @@ function userKey(profile: string): string {
 
 function redisStore(redis: Redis): Store {
   return {
-    load: (profile) => redis.get<Progress>(progressKey(profile)),
+    load: (profile) => redis.get<StoredProgress>(progressKey(profile)),
     save: async (profile, progress) => {
       await redis.set(progressKey(profile), progress);
     },
@@ -51,15 +55,17 @@ function redisStore(redis: Redis): Store {
 }
 
 function store(): Store {
-  const credentials = redisCredentials();
-  if (credentials) return redisStore(new Redis(credentials));
-  if (isProduction) throw new Error("Databasen är inte kopplad: KV_REST_API_URL saknas");
-  return memoryStore;
+  const redis = redisClient();
+  return redis ? redisStore(redis) : memoryStore;
+}
+
+export function migrateProgress(stored: StoredProgress | null): Progress {
+  const { outfit, ...rest } = stored ?? {};
+  return { ...emptyProgress(), ...rest, outfits: rest.outfits ?? (outfit ? [outfit] : []) };
 }
 
 export async function loadProgress(profile: string): Promise<Progress> {
-  const stored = await store().load(profile);
-  return { ...emptyProgress(), ...stored };
+  return migrateProgress(await store().load(profile));
 }
 
 export async function saveProgress(profile: string, progress: Progress): Promise<void> {

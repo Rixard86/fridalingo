@@ -43,3 +43,20 @@ export async function putProgress(progress: Progress): Promise<boolean> {
 export async function postLogout(): Promise<void> {
   await fetch("/api/logout", { method: "POST" }).catch(() => null);
 }
+
+export interface LeaderboardEntry {
+  rank: number;
+  name: string;
+  score: number;
+  isMe: boolean;
+}
+
+export interface LeaderboardData {
+  entries: LeaderboardEntry[];
+  me: { rank: number; score: number } | null;
+}
+
+export async function fetchLeaderboard(board: string): Promise<LeaderboardData | null> {
+  const response = await fetch(`/api/leaderboard?board=${board}`, { cache: "no-store" }).catch(() => null);
+  return response?.ok ? response.json() : null;
+}

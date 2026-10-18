@@ -17,9 +17,9 @@ export const progressSchema = z.object({
   perfectLessons: count,
   bestCombo: count,
   badges: z.array(z.string()),
-  outfit: z.string().nullable(),
-  stars: z.record(z.string(), count),
-  endlessRecord: count,
+  outfits: z.array(z.string()).default([]),
+  stars: z.record(z.string(), count).default({}),
+  endlessRecord: count.default(0),
 });
 
 const username = z

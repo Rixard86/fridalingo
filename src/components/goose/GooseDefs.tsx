@@ -1,4 +1,4 @@
-const PAINT_NAMES = ["body", "head", "wing", "beak", "foot", "scarf", "cheek", "iris", "shadow"] as const;
+const PAINT_NAMES = ["body", "head", "wing", "beak", "foot", "scarf", "cheek", "iris", "shadow", "steel", "gold", "hoodie"] as const;
 
 export type PaintName = (typeof PAINT_NAMES)[number];
 export type GoosePaint = Record<PaintName, string>;
@@ -7,9 +7,35 @@ export function paintFor(prefix: string): GoosePaint {
   return Object.fromEntries(PAINT_NAMES.map((name) => [name, `url(#${prefix}-${name})`])) as GoosePaint;
 }
 
+function GearGradients({ prefix }: { prefix: string }) {
+  return (
+    <>
+      <linearGradient id={`${prefix}-steel`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#e8edf2" />
+        <stop offset="45%" stopColor="#aab4bf" />
+        <stop offset="100%" stopColor="#6f7b88" />
+      </linearGradient>
+      <linearGradient id={`${prefix}-gold`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#fff2a8" />
+        <stop offset="50%" stopColor="#ffc800" />
+        <stop offset="100%" stopColor="#c98a00" />
+      </linearGradient>
+      <linearGradient id={`${prefix}-hoodie`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#3f5677" />
+        <stop offset="100%" stopColor="#24344d" />
+      </linearGradient>
+      <radialGradient id={`${prefix}-shadow`}>
+        <stop offset="0%" stopColor="#000000" stopOpacity="0.22" />
+        <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+      </radialGradient>
+    </>
+  );
+}
+
 export function GooseDefs({ prefix }: { prefix: string }) {
   return (
     <defs>
+      <GearGradients prefix={prefix} />
       <radialGradient id={`${prefix}-body`} cx="40%" cy="35%" r="70%">
         <stop offset="0%" stopColor="#ffffff" />
         <stop offset="65%" stopColor="#f4f7fb" />
@@ -44,10 +70,6 @@ export function GooseDefs({ prefix }: { prefix: string }) {
         <stop offset="0%" stopColor="#8a5a2b" />
         <stop offset="70%" stopColor="#4a2c14" />
         <stop offset="100%" stopColor="#1e1208" />
-      </radialGradient>
-      <radialGradient id={`${prefix}-shadow`}>
-        <stop offset="0%" stopColor="#000000" stopOpacity="0.22" />
-        <stop offset="100%" stopColor="#000000" stopOpacity="0" />
       </radialGradient>
     </defs>
   );

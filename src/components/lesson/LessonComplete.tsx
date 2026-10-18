@@ -8,7 +8,8 @@ import { celebrate } from "@/lib/client/celebrate";
 import { playFanfare } from "@/lib/client/sounds";
 import { useToday } from "@/lib/client/useToday";
 import { applyLessonResult, MAX_STARS, PERFECT_BONUS_XP, todaysXp } from "@/lib/progress";
-import { DAILY_GOAL_XP, levelFor, newlyUnlockedOutfits } from "@/lib/rewards";
+import { newlyUnlockedOutfits } from "@/lib/outfits";
+import { DAILY_GOAL_XP, levelFor } from "@/lib/rewards";
 import type { LessonResult } from "@/lib/types";
 
 const PERCENT = 100;
@@ -69,7 +70,7 @@ export function LessonComplete({ result }: { result: LessonResult }) {
 
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center gap-5 px-4 py-10">
-      <Goose mood="cheer" outfit={after.outfit} className="w-40 animate-goose-jump" />
+      <Goose mood="cheer" outfits={after.outfits} className="w-40 animate-goose-jump" />
       <EarnedStars stars={report.stars} />
       <h1 className="text-center text-4xl font-black text-bee-dark">Banan klar!</h1>
       <div className="flex w-full gap-3">

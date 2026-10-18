@@ -46,7 +46,7 @@ export interface Progress {
   perfectLessons: number;
   bestCombo: number;
   badges: string[];
-  outfit: string | null;
+  outfits: string[];
   stars: Record<string, number>;
   endlessRecord: number;
 }

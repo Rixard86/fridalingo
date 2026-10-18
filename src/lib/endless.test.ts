@@ -13,7 +13,7 @@ import {
 import { buildMixLesson, mixPool } from "./mix";
 import { emptyProgress } from "./progress";
 import { seededRandom } from "./random";
-import { newlyEarnedBadges } from "./rewards";
+import { newlyEarnedBadges } from "./badges";
 
 const context = { words: [], pool: ALL_WORDS, random: seededRandom(3) };
 const first = nextEndlessExercise({ pendingReviews: {}, previousWordId: null }, context);

@@ -3,15 +3,17 @@
 import { useState } from "react";
 import { BadgesTab } from "./BadgesTab";
 import { EndlessTab } from "./EndlessTab";
+import { LeaderboardTab } from "./LeaderboardTab";
 import { LearnTab } from "./LearnTab";
 import { StatsBar } from "./StatsBar";
 import { WardrobeTab } from "./WardrobeTab";
 
-type TabId = "learn" | "endless" | "badges" | "goose";
+type TabId = "learn" | "endless" | "top" | "badges" | "goose";
 
 const TABS: { id: TabId; icon: string; label: string }[] = [
   { id: "learn", icon: "🗺️", label: "Karta" },
   { id: "endless", icon: "♾️", label: "Endless" },
+  { id: "top", icon: "🏆", label: "Topp" },
   { id: "badges", icon: "🏅", label: "Märken" },
   { id: "goose", icon: "🪿", label: "Gåsen" },
 ];
@@ -19,6 +21,7 @@ const TABS: { id: TabId; icon: string; label: string }[] = [
 const TAB_CONTENT: Record<TabId, () => React.JSX.Element> = {
   learn: LearnTab,
   endless: EndlessTab,
+  top: LeaderboardTab,
   badges: BadgesTab,
   goose: WardrobeTab,
 };
@@ -38,7 +41,7 @@ export function HomeScreen() {
             <button
               key={item.id}
               onClick={() => setTab(item.id)}
-              className={`flex flex-col items-center rounded-2xl border-2 px-3 py-1 font-extrabold ${
+              className={`flex flex-col items-center rounded-2xl border-2 px-2 py-1 font-extrabold ${
                 tab === item.id ? "border-sky bg-sky-light text-sky-dark" : "border-transparent text-hare"
               }`}
             >

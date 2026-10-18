@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount } from "@/components/ProgressProvider";
-import { BADGES } from "@/lib/rewards";
+import { BADGES } from "@/lib/badges";
 
 export function BadgesTab() {
   const { progress } = useAccount();
