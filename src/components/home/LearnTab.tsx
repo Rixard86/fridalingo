@@ -1,50 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import { GooseSays } from "@/components/goose/GooseSays";
+import { WorldMap } from "@/components/map/WorldMap";
 import { useAccount } from "@/components/ProgressProvider";
-import { WEEKS } from "@/data/weeks";
-import { useToday } from "@/lib/client/useToday";
-import { homeGreeting } from "@/lib/messages";
-import { currentStreak, todaysXp } from "@/lib/progress";
-import { DAILY_GOAL_XP } from "@/lib/rewards";
-import { WeekCard } from "./WeekCard";
 
-function ReviewCard({ hardWords }: { hardWords: number }) {
+function ReviewButton({ hardWords }: { hardWords: number }) {
   return (
     <Link
       href="/repetera"
-      className="flex items-center gap-4 rounded-3xl border-2 border-b-4 border-sky-dark bg-sky p-4 text-white transition active:translate-y-0.5"
+      aria-label="Repetera"
+      className="fixed right-4 bottom-24 z-20 flex h-16 w-16 items-center justify-center rounded-full border-b-4 border-sky-dark bg-sky text-3xl shadow-lg transition active:translate-y-0.5"
     >
-      <span className="text-4xl">🧠</span>
-      <span className="flex-1">
-        <span className="block text-xl font-black">Repetera</span>
-        <span className="block font-bold opacity-90">
-          {hardWords > 0 ? `${hardWords} svåra ord väntar på dig` : "Blanda glosor från alla veckor"}
+      🧠
+      {hardWords > 0 && (
+        <span className="absolute -top-1 -right-1 flex h-7 min-w-7 items-center justify-center rounded-full bg-cardinal px-1 text-sm font-black text-white">
+          {hardWords}
         </span>
-      </span>
-      <span className="text-2xl font-black">›</span>
+      )}
     </Link>
   );
 }
 
 export function LearnTab() {
-  const { name, progress, saveFailed } = useAccount();
-  const today = useToday();
-  const dailyXp = todaysXp(progress, today);
-  const greeting = homeGreeting({ name, streak: currentStreak(progress, today), todaysXp: dailyXp, goalXp: DAILY_GOAL_XP });
+  const { progress, saveFailed } = useAccount();
   return (
-    <div className="flex flex-col gap-5">
-      <GooseSays message={greeting} mood={dailyXp >= DAILY_GOAL_XP ? "cheer" : "happy"} outfit={progress.outfit} />
+    <div className="-mx-4 -mt-6 -mb-30">
       {saveFailed && (
-        <p className="rounded-2xl bg-cardinal-light p-3 text-center font-bold text-cardinal-dark">
+        <p className="m-4 rounded-2xl bg-cardinal-light p-3 text-center font-bold text-cardinal-dark">
           Kunde inte spara. Kolla internet så sparas det nästa gång!
         </p>
       )}
-      <ReviewCard hardWords={Object.keys(progress.pendingReviews).length} />
-      {WEEKS.map((week, index) => (
-        <WeekCard key={week.week} week={week} progress={progress} isNewest={index === 0} />
-      ))}
+      <WorldMap progress={progress} />
+      <ReviewButton hardWords={Object.keys(progress.pendingReviews).length} />
     </div>
   );
 }

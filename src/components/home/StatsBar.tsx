@@ -22,7 +22,7 @@ export function StatsBar() {
   const practicedToday = progress.lastPracticeDay === today;
   const dailyXp = todaysXp(progress, today);
   return (
-    <header className="sticky top-0 z-10 border-b-2 border-swan bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b-2 border-swan bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-xl items-center gap-4 px-4 py-3">
         <div className={`flex items-center gap-1 text-xl font-black ${practicedToday ? "text-fox" : "text-hare"}`} title="Dagar i rad">
           <span className={practicedToday ? "animate-flame" : "grayscale"}>🔥</span>

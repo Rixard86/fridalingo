@@ -7,11 +7,28 @@ import { useAccount } from "@/components/ProgressProvider";
 import { celebrate } from "@/lib/client/celebrate";
 import { playFanfare } from "@/lib/client/sounds";
 import { useToday } from "@/lib/client/useToday";
-import { applyLessonResult, PERFECT_BONUS_XP, todaysXp } from "@/lib/progress";
+import { applyLessonResult, MAX_STARS, PERFECT_BONUS_XP, todaysXp } from "@/lib/progress";
 import { DAILY_GOAL_XP, levelFor, newlyUnlockedOutfits } from "@/lib/rewards";
 import type { LessonResult } from "@/lib/types";
 
 const PERCENT = 100;
+const STAR_DELAY_MS = 250;
+
+function EarnedStars({ stars }: { stars: number }) {
+  return (
+    <div className="flex gap-2 text-6xl">
+      {Array.from({ length: MAX_STARS }, (_, index) => (
+        <span
+          key={index}
+          className={`animate-pop-in drop-shadow ${index < stars ? "text-bee" : "text-swan"}`}
+          style={{ animationDelay: `${index * STAR_DELAY_MS}ms` }}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+}
 
 function StatCard({ label, value, color }: { label: string; value: string; color: string }) {
   return (
@@ -53,7 +70,8 @@ export function LessonComplete({ result }: { result: LessonResult }) {
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center gap-5 px-4 py-10">
       <Goose mood="cheer" outfit={after.outfit} className="w-40 animate-goose-jump" />
-      <h1 className="text-center text-4xl font-black text-bee-dark">Lektionen klar!</h1>
+      <EarnedStars stars={report.stars} />
+      <h1 className="text-center text-4xl font-black text-bee-dark">Banan klar!</h1>
       <div className="flex w-full gap-3">
         <StatCard label="XP" value={`+${report.earnedXp}`} color="border-bee bg-bee" />
         <StatCard label="Träff" value={`${accuracyOf(result)}%`} color="border-feather bg-feather" />

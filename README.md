@@ -2,7 +2,8 @@
 
 En Duolingo-klon för veckans engelska glosor, med en vit tecknad gås som maskot.
 
-- Varje vecka får tre lektioner: **Lär dig** (flerval och para ihop), **Stava** (skriva och lyssna) och **Meningar** (fyll i de understrukna orden i en mening).
+- En karta i Candy Crush-stil där varje vecka är en egen värld med fyra banor: **Lär dig** (flerval och para ihop), **Stava** (skriva och lyssna), **Meningar** (fyll i de understrukna orden) och **Veckoprov** (skriv alla ord, som på provet).
+- Banorna låses upp i ordning och ger 1–3 stjärnor beroende på antal fel.
 - **Repetera** blandar ord från alla veckor, och de ord man svarat fel på kommer först.
 - XP, nivåer, dagsmål, dagssvit, kombo-räknare, märken och gåskläder som låses upp med nivåer.
 - Varje spelare skapar ett eget konto med eget användarnamn och lösenord. Framstegen sparas i en databas och följer med mellan enheter.

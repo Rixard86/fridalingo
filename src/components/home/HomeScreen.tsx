@@ -29,7 +29,7 @@ export function HomeScreen() {
       <main className="mx-auto w-full max-w-xl flex-1 px-4 py-6">
         <Content />
       </main>
-      <nav className="fixed inset-x-0 bottom-0 z-10 border-t-2 border-swan bg-white">
+      <nav className="fixed inset-x-0 bottom-0 z-30 border-t-2 border-swan bg-white">
         <div className="mx-auto flex max-w-xl justify-around py-2">
           {TABS.map((item) => (
             <button

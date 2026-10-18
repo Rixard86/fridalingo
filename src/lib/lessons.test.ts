@@ -63,6 +63,16 @@ describe("sentence lesson", () => {
   });
 });
 
+describe("weekly test", () => {
+  it("asks for every word in English, like the real test", () => {
+    const exercises = buildLesson("prov", contextFor(43));
+    expect(exercises).toHaveLength(12);
+    for (const exercise of exercises) {
+      expect(exercise).toMatchObject({ kind: "write", direction: "sv-en" });
+    }
+  });
+});
+
 describe("review", () => {
   const context: LessonContext = { words: [], pool: ALL_WORDS, random: seededRandom(7) };
 

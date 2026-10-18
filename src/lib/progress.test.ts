@@ -4,8 +4,8 @@ import {
   applyLessonResult,
   currentStreak,
   emptyProgress,
-  isLessonUnlocked,
   lessonXp,
+  starsFor,
   todaysXp,
   updatePendingReviews,
 } from "./progress";
@@ -67,6 +67,21 @@ describe("daily xp", () => {
   });
 });
 
+describe("stars", () => {
+  it("gives three stars without mistakes and fewer with more mistakes", () => {
+    expect(starsFor(0)).toBe(3);
+    expect(starsFor(2)).toBe(2);
+    expect(starsFor(3)).toBe(1);
+  });
+
+  it("keeps the best result for a level", () => {
+    const first = applyLessonResult(emptyProgress(), { result: perfectResult, today: TODAY });
+    const second = applyLessonResult(first.progress, { result: sloppyResult, today: TODAY });
+    expect(second.stars).toBe(2);
+    expect(second.progress.stars["37/lar-dig"]).toBe(3);
+  });
+});
+
 describe("pending reviews", () => {
   it("adds reviews for misses and removes them after correct answers", () => {
     const afterMiss = updatePendingReviews({}, [{ wordId: "a", correct: false }]);
@@ -85,14 +100,6 @@ describe("badges and unlocks", () => {
     expect(first.newBadges.map((badge) => badge.id)).toEqual(["forsta-steget", "felfri"]);
     const second = applyLessonResult(first.progress, { result: perfectResult, today: TODAY });
     expect(second.newBadges).toEqual([]);
-  });
-
-  it("unlocks lessons in order", () => {
-    const start = emptyProgress();
-    expect(isLessonUnlocked(start, { week: 37, kind: "lar-dig" })).toBe(true);
-    expect(isLessonUnlocked(start, { week: 37, kind: "stava" })).toBe(false);
-    const { progress } = applyLessonResult(start, { result: perfectResult, today: TODAY });
-    expect(isLessonUnlocked(progress, { week: 37, kind: "stava" })).toBe(true);
   });
 
   it("unlocks the cap at level two", () => {

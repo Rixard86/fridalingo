@@ -1,5 +1,4 @@
 import { previousDayKey } from "./days";
-import { LESSON_KINDS, lessonKey, type LessonKind } from "./lessons";
 import { newlyEarnedBadges, type Badge } from "./rewards";
 import type { AnswerEvent, LessonResult, Progress } from "./types";
 
@@ -8,6 +7,10 @@ export const PERFECT_BONUS_XP = 5;
 export const COMBO_STEP = 3;
 export const MAX_COMBO_BONUS_XP = 5;
 export const REVIEWS_PER_MISS = 2;
+export const MAX_STARS = 3;
+const TWO_STARS = 2;
+const ONE_STAR = 1;
+const TWO_STAR_MAX_MISTAKES = 2;
 
 export interface Completion {
   result: LessonResult;
@@ -18,6 +21,7 @@ export interface CompletionReport {
   progress: Progress;
   earnedXp: number;
   newBadges: Badge[];
+  stars: number;
 }
 
 export function emptyProgress(): Progress {
@@ -32,6 +36,7 @@ export function emptyProgress(): Progress {
     bestCombo: 0,
     badges: [],
     outfit: null,
+    stars: {},
   };
 }
 
@@ -39,6 +44,11 @@ export function lessonXp(result: LessonResult): number {
   const perfectBonus = result.mistakes === 0 ? PERFECT_BONUS_XP : 0;
   const comboBonus = Math.min(MAX_COMBO_BONUS_XP, Math.floor(result.bestCombo / COMBO_STEP));
   return LESSON_XP + perfectBonus + comboBonus;
+}
+
+export function starsFor(mistakes: number): number {
+  if (mistakes === 0) return MAX_STARS;
+  return mistakes <= TWO_STAR_MAX_MISTAKES ? TWO_STARS : ONE_STAR;
 }
 
 export function currentStreak(progress: Progress, today: string): number {
@@ -82,6 +92,7 @@ function withLessonResult(progress: Progress, completion: Completion): Progress 
     pendingReviews: updatePendingReviews(progress.pendingReviews, result.events),
     perfectLessons: progress.perfectLessons + (result.mistakes === 0 ? 1 : 0),
     bestCombo: Math.max(progress.bestCombo, result.bestCombo),
+    stars: { ...progress.stars, [result.lessonKey]: Math.max(progress.stars[result.lessonKey] ?? 0, starsFor(result.mistakes)) },
   };
 }
 
@@ -92,15 +103,6 @@ export function applyLessonResult(progress: Progress, completion: Completion): C
     progress: { ...updated, badges: [...updated.badges, ...newBadges.map((badge) => badge.id)] },
     earnedXp: updated.xp - progress.xp,
     newBadges,
+    stars: starsFor(completion.result.mistakes),
   };
-}
-
-export function isLessonUnlocked(progress: Progress, lesson: { week: number; kind: LessonKind }): boolean {
-  const index = LESSON_KINDS.indexOf(lesson.kind);
-  if (index === 0) return true;
-  return (progress.completed[lessonKey(lesson.week, LESSON_KINDS[index - 1])] ?? 0) > 0;
-}
-
-export function isLessonDone(progress: Progress, lesson: { week: number; kind: LessonKind }): boolean {
-  return (progress.completed[lessonKey(lesson.week, lesson.kind)] ?? 0) > 0;
 }

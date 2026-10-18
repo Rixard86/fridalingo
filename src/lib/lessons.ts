@@ -2,13 +2,14 @@ import { answersFor, normalizeAnswer } from "./answers";
 import { chunk, shuffle, type RandomSource } from "./random";
 import type { Direction, Exercise, Word } from "./types";
 
-export const LESSON_KINDS = ["lar-dig", "stava", "meningar"] as const;
+export const LESSON_KINDS = ["lar-dig", "stava", "meningar", "prov"] as const;
 export type LessonKind = (typeof LESSON_KINDS)[number];
 
 export const LESSON_TITLES: Record<LessonKind, string> = {
   "lar-dig": "Lär dig",
   stava: "Stava",
   meningar: "Meningar",
+  prov: "Veckoprov",
 };
 
 export const REVIEW_KEY = "repetera";
@@ -84,6 +85,12 @@ function buildSentenceLesson(context: LessonContext): Exercise[] {
   return shuffle([...sentences, ...writes], context.random);
 }
 
+function buildTestLesson(context: LessonContext): Exercise[] {
+  return shuffle(context.words, context.random).map(
+    (word): Exercise => ({ kind: "write", word, direction: "sv-en" }),
+  );
+}
+
 const REVIEW_FACTORIES: ((word: Word, context: LessonContext) => Exercise)[] = [
   (word) => ({ kind: "write", word, direction: "sv-en" }),
   (word) => ({ kind: "listen", word }),
@@ -101,6 +108,7 @@ const LESSON_BUILDERS: Record<LessonKind, (context: LessonContext) => Exercise[]
   "lar-dig": buildLearnLesson,
   stava: buildSpellLesson,
   meningar: buildSentenceLesson,
+  prov: buildTestLesson,
 };
 
 export function buildLesson(kind: LessonKind, context: LessonContext): Exercise[] {

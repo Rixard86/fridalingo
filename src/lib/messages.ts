@@ -34,17 +34,3 @@ const ENDINGS_WITHOUT_GENITIVE_S = /[sxz]$/i;
 export function possessive(name: string): string {
   return ENDINGS_WITHOUT_GENITIVE_S.test(name) ? name : `${name}s`;
 }
-
-export interface GreetingInfo {
-  name: string;
-  streak: number;
-  todaysXp: number;
-  goalXp: number;
-}
-
-export function homeGreeting(info: GreetingInfo): string {
-  if (info.todaysXp >= info.goalXp) return `Dagsmålet är klart, ${info.name}! Du är en riktig glosgås! 🎉`;
-  if (info.todaysXp > 0) return `Bra jobbat, ${info.name}! Bara lite kvar till dagsmålet!`;
-  if (info.streak > 0) return `Hej ${info.name}! Håll igång din svit på ${info.streak} dagar! 🔥`;
-  return `Kvack! Hej ${info.name}! Dags för dagens glosor?`;
-}

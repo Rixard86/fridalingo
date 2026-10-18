@@ -46,6 +46,7 @@ export interface Progress {
   bestCombo: number;
   badges: string[];
   outfit: string | null;
+  stars: Record<string, number>;
 }
 
 export interface LessonResult {
