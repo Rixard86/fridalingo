@@ -15,10 +15,10 @@ function Cap() {
 function Sunglasses() {
   return (
     <g stroke={OUTLINE} strokeWidth="3">
-      <path d="M68 44 L76 44 M124 44 L132 44 M98 45 L102 45" fill="none" />
-      <rect x="75" y="37" width="23" height="16" rx="7" fill="#1f2937" />
-      <rect x="102" y="37" width="23" height="16" rx="7" fill="#1f2937" />
-      <path d="M80 41 L87 41 M107 41 L114 41" stroke="#ffffff" strokeLinecap="round" />
+      <path d="M68 43 L75 43 M125 43 L132 43 M98 44 L102 44" fill="none" />
+      <rect x="75" y="33" width="23" height="21" rx="8" fill="#1f2937" />
+      <rect x="102" y="33" width="23" height="21" rx="8" fill="#1f2937" />
+      <path d="M80 38 L87 38 M107 38 L114 38" stroke="#ffffff" strokeLinecap="round" />
     </g>
   );
 }
