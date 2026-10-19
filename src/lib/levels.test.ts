@@ -93,6 +93,11 @@ describe("map layout", () => {
     }
   });
 
+  it("lifts the first world's banner above the bottom of the map, where the menu sits", () => {
+    expect(layout.worlds[0].bannerBottom).toBeGreaterThanOrEqual(BANNER_HEIGHT);
+    expect(layout.worlds.slice(1).every((area) => area.bannerBottom === 0)).toBe(true);
+  });
+
   it("covers the whole map with worlds without gaps", () => {
     const sorted = [...layout.worlds].sort((a, b) => a.top - b.top);
     expect(sorted[0].top).toBe(0);

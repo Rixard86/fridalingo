@@ -19,6 +19,7 @@ export interface WorldArea {
   world: World;
   top: number;
   height: number;
+  bannerBottom: number;
 }
 
 export interface MapLayout {
@@ -54,7 +55,7 @@ export function layoutMap(map: GameMap): MapLayout {
     worlds: spans.map((span, index) => {
       const bottom = index === 0 ? 0 : span.start;
       const top = index === lastIndex ? height : span.end;
-      return { world: span.world, top: height - top, height: top - bottom };
+      return { world: span.world, top: height - top, height: top - bottom, bannerBottom: span.start - bottom };
     }),
   };
 }

@@ -27,7 +27,7 @@ function Banner({ area, onShowWords }: Omit<WorldBandProps, "isTop">) {
   const theme = themeFor(world.index);
   const subtitle = world.kind === "week" ? `Vecka ${world.week}` : `Mix v.${world.firstWeek}–${world.week}`;
   return (
-    <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-center" style={{ height: BANNER_HEIGHT }}>
+    <div className="absolute inset-x-0 z-10 flex items-center justify-center" style={{ height: BANNER_HEIGHT, bottom: area.bannerBottom }}>
       <div
         className="rounded-3xl border-4 border-b-8 bg-white/95 px-6 py-2 text-center shadow-lg"
         style={{ borderColor: theme.node, borderBottomColor: theme.nodeDark }}
