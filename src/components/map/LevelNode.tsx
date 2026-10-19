@@ -17,13 +17,20 @@ interface LevelNodeProps {
   ref?: Ref<HTMLDivElement>;
 }
 
+const STAR_PATH = "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z";
+
 function StarRow({ stars }: { stars: number }) {
   return (
-    <span className="absolute bottom-full mb-1 flex gap-0.5 text-xl drop-shadow">
+    <span className="absolute bottom-full mb-1 flex gap-0.5 rounded-full bg-white/90 px-1.5 py-0.5 shadow">
       {Array.from({ length: MAX_STARS }, (_, index) => (
-        <span key={index} className={index < stars ? "text-bee" : "text-white/70"}>
-          ★
-        </span>
+        <svg key={index} viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
+          <path
+            d={STAR_PATH}
+            strokeWidth="2"
+            strokeLinejoin="round"
+            className={index < stars ? "fill-bee stroke-fox" : "fill-swan stroke-hare"}
+          />
+        </svg>
       ))}
     </span>
   );
