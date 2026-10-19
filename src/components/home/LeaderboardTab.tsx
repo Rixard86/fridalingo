@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Goose } from "@/components/goose/Goose";
 import { fetchLeaderboard, type LeaderboardData, type LeaderboardEntry } from "@/lib/client/api";
 import { levelFor } from "@/lib/rewards";
 import type { Board } from "@/lib/scores";
@@ -26,6 +27,7 @@ function Row({ entry, board }: { entry: LeaderboardEntry; board: Board }) {
       }`}
     >
       <span className="w-8 text-center text-2xl font-black text-wolf">{MEDALS[entry.rank - 1] ?? entry.rank}</span>
+      <Goose look={entry.look} seasonal={false} className="w-12 shrink-0" />
       <span className="flex-1 truncate text-lg font-black">
         {entry.name}
         {entry.isMe && <span className="ml-1 text-sm text-sky-dark">(du)</span>}

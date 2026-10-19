@@ -49,6 +49,7 @@ export interface LeaderboardEntry {
   name: string;
   score: number;
   isMe: boolean;
+  look: string | null;
 }
 
 export interface LeaderboardData {

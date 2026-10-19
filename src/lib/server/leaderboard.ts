@@ -1,5 +1,6 @@
 import type { Redis } from "@upstash/redis";
 import { BOARDS, type Board } from "@/lib/scores";
+import { loadLooks } from "./looks";
 import { redisClient } from "./redis";
 import { loadUser } from "./store";
 
@@ -16,6 +17,7 @@ export interface ScoreEntry {
   name: string;
   score: number;
   isMe: boolean;
+  look: string | null;
 }
 
 export interface Leaderboard {
@@ -67,12 +69,16 @@ async function rankingFor(board: Board, profile: string): Promise<{ top: Ranked[
 
 export async function leaderboard(board: Board, profile: string): Promise<Leaderboard> {
   const { top, me } = await rankingFor(board, profile);
-  const users = await Promise.all(top.map((entry) => loadUser(entry.profile)));
+  const [users, looks] = await Promise.all([
+    Promise.all(top.map((entry) => loadUser(entry.profile))),
+    loadLooks(top.map((entry) => entry.profile)),
+  ]);
   const entries = top.map((entry, index) => ({
     rank: index + 1,
     name: users[index]?.name ?? entry.profile,
     score: entry.score,
     isMe: entry.profile === profile,
+    look: looks[index],
   }));
   return { entries, me };
 }

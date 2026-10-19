@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { leaderboard, saveScores } from "./leaderboard";
+import { saveLook } from "./looks";
 import { createUser, migrateProgress } from "./store";
 
 const PASSWORD = { salt: "s", hash: "h" };
@@ -27,6 +28,16 @@ describe("leaderboard", () => {
     const xp = await leaderboard("xp", "sam");
     expect(xp.entries.filter((entry) => entry.name === "Sam")).toHaveLength(1);
     expect(xp.me?.score).toBe(10);
+  });
+});
+
+describe("leaderboard looks", () => {
+  it("shows the look each player wears, with the scarf as default", async () => {
+    await saveLook("elias", "keps");
+    await saveLook("sam", null);
+    const xp = await leaderboard("xp", "elias");
+    const looks = Object.fromEntries(xp.entries.map((entry) => [entry.name, entry.look]));
+    expect(looks).toEqual({ Elias: "keps", Sam: null, Kim: "halsduk" });
   });
 });
 
