@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { WorldMap } from "@/components/map/WorldMap";
 import { useAccount } from "@/components/ProgressProvider";
+import { PRACTICE_HREF } from "@/lib/lessons";
 
 function ReviewButton({ hardWords }: { hardWords: number }) {
   return (
     <Link
-      href="/repetera"
-      aria-label="Repetera"
+      href={PRACTICE_HREF}
+      aria-label="Öva"
       className="fixed right-4 bottom-24 z-20 flex h-16 w-16 items-center justify-center rounded-full border-b-4 border-sky-dark bg-sky text-3xl shadow-lg transition active:translate-y-0.5"
     >
       🧠

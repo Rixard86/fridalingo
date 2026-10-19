@@ -13,6 +13,8 @@ export const LESSON_TITLES: Record<LessonKind, string> = {
 };
 
 export const REVIEW_KEY = "repetera";
+export const PRACTICE_HREF = "/ova";
+const PRACTICE_PREFIX = "ova";
 export const REVIEW_SIZE = 10;
 
 const MATCH_GROUP_SIZE = 6;
@@ -34,6 +36,10 @@ interface ChoiceSetup {
 
 export function lessonKey(week: number, kind: LessonKind): string {
   return `${week}/${kind}`;
+}
+
+export function practiceKey(week: number, kind: LessonKind): string {
+  return `${PRACTICE_PREFIX}/${lessonKey(week, kind)}`;
 }
 
 export function isLessonKind(value: string): value is LessonKind {

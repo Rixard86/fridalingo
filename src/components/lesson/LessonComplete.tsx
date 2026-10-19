@@ -54,7 +54,7 @@ function accuracyOf(result: LessonResult): number {
   return result.events.length === 0 ? PERCENT : Math.round((correct / result.events.length) * PERCENT);
 }
 
-export function LessonComplete({ result }: { result: LessonResult }) {
+export function LessonComplete({ result, homeHref }: { result: LessonResult; homeHref: string }) {
   const { progress, updateProgress } = useAccount();
   const today = useToday();
   const [before] = useState(progress);
@@ -94,7 +94,7 @@ export function LessonComplete({ result }: { result: LessonResult }) {
           {badge.emoji} Nytt märke: {badge.title}!
         </Highlight>
       ))}
-      <Link href="/" className="btn btn-green mt-4 w-full">
+      <Link href={homeHref} className="btn btn-green mt-4 w-full">
         Fortsätt
       </Link>
     </main>

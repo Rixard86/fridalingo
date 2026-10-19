@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useAccount } from "@/components/ProgressProvider";
 import { ALL_WORDS } from "@/data/weeks";
-import { buildReviewLesson, pickReviewWords, REVIEW_KEY } from "@/lib/lessons";
+import { buildReviewLesson, pickReviewWords, PRACTICE_HREF, REVIEW_KEY } from "@/lib/lessons";
 import { LessonPlayer } from "./LessonPlayer";
 
 export function ReviewLesson() {
@@ -13,5 +13,5 @@ export function ReviewLesson() {
     const words = pickReviewWords(progress.pendingReviews, context);
     return buildReviewLesson({ ...context, words });
   });
-  return <LessonPlayer exercises={exercises} lessonKey={REVIEW_KEY} />;
+  return <LessonPlayer exercises={exercises} lessonKey={REVIEW_KEY} homeHref={PRACTICE_HREF} />;
 }

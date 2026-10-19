@@ -22,9 +22,10 @@ import { LessonHeader } from "./LessonHeader";
 interface LessonPlayerProps {
   exercises: Exercise[];
   lessonKey: string;
+  homeHref?: string;
 }
 
-export function LessonPlayer({ exercises, lessonKey }: LessonPlayerProps) {
+export function LessonPlayer({ exercises, lessonKey, homeHref = "/" }: LessonPlayerProps) {
   const [state, setState] = useState(() => startLesson(exercises));
   const exercise = currentExercise(state);
 
@@ -32,6 +33,7 @@ export function LessonPlayer({ exercises, lessonKey }: LessonPlayerProps) {
     return (
       <LessonComplete
         result={{ lessonKey, events: state.events, mistakes: state.mistakes, bestCombo: state.bestCombo }}
+        homeHref={homeHref}
       />
     );
   }
@@ -52,7 +54,7 @@ export function LessonPlayer({ exercises, lessonKey }: LessonPlayerProps) {
   const outcome = state.lastOutcome;
   return (
     <div className="flex min-h-dvh flex-col pb-48">
-      <LessonHeader ratio={completionRatio(state)} combo={state.combo} />
+      <LessonHeader ratio={completionRatio(state)} combo={state.combo} homeHref={homeHref} />
       <main className="mx-auto w-full max-w-xl flex-1 px-4 py-8">
         <ExerciseView key={state.position} exercise={exercise} locked={outcome !== null} onSubmit={handleSubmit} />
       </main>

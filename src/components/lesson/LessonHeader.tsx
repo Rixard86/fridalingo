@@ -7,7 +7,7 @@ import { isMuted, setMuted } from "@/lib/client/sounds";
 const PERCENT = 100;
 const COMBO_SHOWN_FROM = 2;
 
-export function LessonHeader({ ratio, combo }: { ratio: number; combo: number }) {
+export function LessonHeader({ ratio, combo, homeHref }: { ratio: number; combo: number; homeHref: string }) {
   const [muted, setMutedState] = useState(isMuted);
 
   function toggleMute() {
@@ -17,7 +17,7 @@ export function LessonHeader({ ratio, combo }: { ratio: number; combo: number })
 
   return (
     <header className="mx-auto flex w-full max-w-xl items-center gap-4 px-4 pt-5">
-      <Link href="/" aria-label="Avsluta lektionen" className="text-3xl font-black text-hare hover:text-wolf">
+      <Link href={homeHref} aria-label="Avsluta lektionen" className="text-3xl font-black text-hare hover:text-wolf">
         ✕
       </Link>
       <div className="h-4 flex-1 overflow-hidden rounded-full bg-swan">

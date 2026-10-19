@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { newlyEarnedBadges } from "./badges";
+import { practiceKey } from "./lessons";
 import { chooseLook, wornLook } from "./outfits";
 import { emptyProgress } from "./progress";
 import { mapLevelsDone, scoresFor, totalStars, worldsDone } from "./scores";
@@ -25,6 +26,15 @@ describe("map scores", () => {
 
   it("sums stars from map levels only", () => {
     expect(totalStars(progress)).toBe(6);
+  });
+
+  it("keeps practice lessons off the map", () => {
+    const stava = practiceKey(37, "stava");
+    const practiced = progressWith([stava, practiceKey(37, "prov")], { stars: { [stava]: 3 } });
+    expect(stava).toBe("ova/37/stava");
+    expect(mapLevelsDone(practiced)).toBe(0);
+    expect(worldsDone(practiced)).toBe(0);
+    expect(totalStars(practiced)).toBe(0);
   });
 
   it("builds one score per leaderboard", () => {
