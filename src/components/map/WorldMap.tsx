@@ -21,7 +21,7 @@ function nodeState(progress: Progress, position: { levels: Level[]; index: numbe
   return isLevelUnlocked(progress, position) ? "open" : "locked";
 }
 
-function GooseMarker({ position, look }: { position: NodePosition; look: string | null }) {
+function GooseMarker({ position, progress }: { position: NodePosition; progress: Progress }) {
   const onLeft = position.x > MAP_CENTER;
   const offset = onLeft ? `- ${GOOSE_OFFSET_PX}px` : `+ ${GOOSE_OFFSET_PX}px`;
   return (
@@ -30,7 +30,7 @@ function GooseMarker({ position, look }: { position: NodePosition; look: string 
       style={{ left: `calc(${position.x}% ${offset})`, top: position.y }}
     >
       <div className={onLeft ? "-scale-x-100" : undefined}>
-        <Goose look={look} className="w-16 animate-goose-bob drop-shadow-lg" />
+        <Goose look={wornLook(progress)} themes={progress.seasonThemes} className="w-16 animate-goose-bob drop-shadow-lg" />
       </div>
     </div>
   );
@@ -67,7 +67,7 @@ export function WorldMap({ progress }: { progress: Progress }) {
           theme={themeFor(worldIndex.get(level.worldId) ?? 0)}
         />
       ))}
-      <GooseMarker position={layout.nodes[current]} look={wornLook(progress)} />
+      <GooseMarker position={layout.nodes[current]} progress={progress} />
       {openWeek !== null && <WordListSheet week={openWeek} onClose={() => setOpenWeek(null)} />}
     </div>
   );

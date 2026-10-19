@@ -1,5 +1,6 @@
 import { previousDayKey } from "./days";
 import { newlyEarnedBadges, type Badge } from "./badges";
+import { DEFAULT_SEASON_THEMES } from "./seasons";
 import type { AnswerEvent, LessonResult, Progress } from "./types";
 
 export const LESSON_XP = 10;
@@ -37,6 +38,7 @@ export function emptyProgress(): Progress {
     badges: [],
     outfits: [],
     scarfOff: false,
+    seasonThemes: { ...DEFAULT_SEASON_THEMES },
     stars: {},
     endlessRecord: 0,
   };

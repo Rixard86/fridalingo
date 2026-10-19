@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CHRISTMAS_THEMES, DEFAULT_SEASON_THEMES, HALLOWEEN_THEMES } from "./seasons";
 
 export const MAX_NAME_LENGTH = 30;
 export const MIN_PASSWORD_LENGTH = 4;
@@ -19,6 +20,9 @@ export const progressSchema = z.object({
   badges: z.array(z.string()),
   outfits: z.array(z.string()).default([]),
   scarfOff: z.boolean().default(false),
+  seasonThemes: z
+    .object({ halloween: z.enum(HALLOWEEN_THEMES), jul: z.enum(CHRISTMAS_THEMES) })
+    .default(DEFAULT_SEASON_THEMES),
   stars: z.record(z.string(), count).default({}),
   endlessRecord: count.default(0),
 });

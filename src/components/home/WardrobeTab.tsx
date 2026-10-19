@@ -5,6 +5,7 @@ import { useAccount } from "@/components/ProgressProvider";
 import { possessive } from "@/lib/messages";
 import { chooseLook, isOutfitUnlocked, OUTFITS, wornLook, type Outfit } from "@/lib/outfits";
 import { LEVEL_XP, levelFor } from "@/lib/rewards";
+import { SeasonPicker } from "./SeasonPicker";
 
 interface OutfitTileProps {
   outfit: Outfit;
@@ -43,8 +44,9 @@ export function WardrobeTab() {
         <p className="font-bold text-wolf">
           Nivå {level} · {xpToNext} XP till nästa nivå
         </p>
-        <p className="mt-1 text-sm font-bold text-hare">Välj en look. Tryck igen för att ta av den.</p>
       </div>
+      <SeasonPicker />
+      <p className="text-sm font-bold text-hare">Välj en look. Tryck igen för att ta av den.</p>
       <div className="grid w-full grid-cols-3 gap-3">
         {OUTFITS.map((outfit) => (
           <OutfitTile

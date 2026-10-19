@@ -75,7 +75,7 @@ export function LessonComplete({ result }: { result: LessonResult }) {
 
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center gap-5 px-4 py-10">
-      <Goose mood="cheer" look={wornLook(after)} className="w-40 animate-goose-jump" />
+      <Goose mood="cheer" look={wornLook(after)} themes={after.seasonThemes} className="w-40 animate-goose-jump" />
       <EarnedStars stars={report.stars} />
       <h1 className="text-center text-4xl font-black text-bee-dark">Banan klar!</h1>
       <div className="flex w-full gap-3">

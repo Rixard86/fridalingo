@@ -10,7 +10,7 @@ export function EndlessTab() {
   const { progress } = useAccount();
   return (
     <div className="flex flex-col items-center gap-5 text-center">
-      <Goose mood="cheer" look={wornLook(progress)} className="w-36 animate-goose-jump" />
+      <Goose mood="cheer" look={wornLook(progress)} themes={progress.seasonThemes} className="w-36 animate-goose-jump" />
       <h2 className="text-4xl font-black text-fox">♾️ Endless</h2>
       <p className="text-lg font-bold text-wolf">
         Svara på ord efter ord från alla veckor. Du har {START_LIVES} hjärtan och tiden går fortare ju bättre det går!

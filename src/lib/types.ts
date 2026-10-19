@@ -1,3 +1,5 @@
+import type { SeasonId } from "./seasons";
+
 export interface Sentence {
   en: string;
   sv: string;
@@ -48,6 +50,7 @@ export interface Progress {
   badges: string[];
   outfits: string[];
   scarfOff: boolean;
+  seasonThemes: Record<SeasonId, string>;
   stars: Record<string, number>;
   endlessRecord: number;
 }
