@@ -1,0 +1,29 @@
+{
+  "week": 47,
+  "words": [
+    { "en": ["Trousers", "Pants"], "sv": ["Byxor"] },
+    { "en": ["Cardigan"], "sv": ["Kofta"] },
+    {
+      "en": ["Dessert"],
+      "sv": ["Efterrätt"],
+      "sentence": { "en": "We had ice cream for ___.", "sv": "Vi åt glass till efterrätt." }
+    },
+    { "en": ["Trainers"], "sv": ["Gymnastikskor"] },
+    { "en": ["Scarf"], "sv": ["Halsduk"] },
+    { "en": ["Chews"], "sv": ["Tuggar"] },
+    { "en": ["Fit"], "sv": ["Passar"] },
+    { "en": ["Purse"], "sv": ["Handväska"] },
+    { "en": ["Snoring"], "sv": ["Snarkar"] },
+    {
+      "en": ["Delicious"],
+      "sv": ["Utsökt"],
+      "sentence": { "en": "This chocolate cake is ___!", "sv": "Den här chokladkakan är utsökt!" }
+    },
+    { "en": ["Except"], "sv": ["Förutom"] },
+    {
+      "en": ["Across"],
+      "sv": ["Över"],
+      "sentence": { "en": "The duck swam ___ the lake.", "sv": "Ankan simmade över sjön." }
+    }
+  ]
+}

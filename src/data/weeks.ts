@@ -6,6 +6,7 @@ import v40 from "./glosor/v40.json";
 import v41 from "./glosor/v41.json";
 import v42 from "./glosor/v42.json";
 import v43 from "./glosor/v43.json";
+import v47 from "./glosor/v47.json";
 
 interface RawWord {
   en: string[];
@@ -18,7 +19,7 @@ interface RawWeek {
   words: RawWord[];
 }
 
-export const RAW_WEEKS: RawWeek[] = [v37, v38, v39, v40, v41, v42, v43];
+export const RAW_WEEKS: RawWeek[] = [v37, v38, v39, v40, v41, v42, v43, v47];
 
 function slugify(text: string): string {
   return text

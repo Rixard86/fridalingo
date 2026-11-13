@@ -13,7 +13,9 @@ function keysOf(levels: Level[]): string[] {
   return levels.map((level) => level.key);
 }
 
-const WEEK_44: Week = { week: 44, words: WEEKS[0].words.map((word) => ({ ...word, id: `44-${word.id}`, week: 44 })) };
+const NEWEST_WEEK = WEEKS[0].week;
+const NEXT_WEEK = NEWEST_WEEK + 1;
+const UPCOMING_WEEK: Week = { week: NEXT_WEEK, words: WEEKS[0].words.map((word) => ({ ...word, id: `${NEXT_WEEK}-${word.id}`, week: NEXT_WEEK })) };
 const realLevelCount = WEEKS.length * 4;
 
 describe("map levels", () => {
@@ -28,11 +30,11 @@ describe("map levels", () => {
   it("never ends: mix levels follow the newest week", () => {
     const mix = levels.slice(realLevelCount);
     expect(mix.length).toBeGreaterThanOrEqual(8);
-    expect(mix[0]).toMatchObject({ key: mixKey(43, 1), href: "/mix/43/1" });
+    expect(mix[0]).toMatchObject({ key: mixKey(NEWEST_WEEK, 1), href: `/mix/${NEWEST_WEEK}/1` });
   });
 
   it("adds more mix levels as the player completes them", () => {
-    const done = Array.from({ length: 6 }, (_, index) => mixKey(43, index + 1));
+    const done = Array.from({ length: 6 }, (_, index) => mixKey(NEWEST_WEEK, index + 1));
     const grown = buildMap(WEEKS, progressWith(done)).levels;
     expect(grown.length).toBeGreaterThan(levels.length);
     expect(grown.length % 4).toBe(0);
@@ -52,14 +54,14 @@ describe("map levels", () => {
 
 describe("a new week arriving", () => {
   const allReal = WEEKS.flatMap((week) => ["lar-dig", "stava", "meningar", "prov"].map((kind) => `${week.week}/${kind}`));
-  const mixDone = [1, 2, 3, 4, 5].map((number) => mixKey(43, number));
+  const mixDone = [1, 2, 3, 4, 5].map((number) => mixKey(NEWEST_WEEK, number));
   const progress = progressWith([...allReal, ...mixDone]);
   const before = buildMap(WEEKS, progress).levels;
-  const after = buildMap([...WEEKS, WEEK_44], progress).levels;
+  const after = buildMap([...WEEKS, UPCOMING_WEEK], progress).levels;
 
   it("is placed right after the last level the player finished", () => {
-    const lastDone = after.findIndex((level) => level.key === mixKey(43, 5));
-    expect(after[lastDone + 1].key).toBe("44/lar-dig");
+    const lastDone = after.findIndex((level) => level.key === mixKey(NEWEST_WEEK, 5));
+    expect(after[lastDone + 1].key).toBe(`${NEXT_WEEK}/lar-dig`);
   });
 
   it("keeps finished levels and their numbers unchanged", () => {
@@ -68,12 +70,12 @@ describe("a new week arriving", () => {
   });
 
   it("moves the goose to the new week", () => {
-    expect(after[currentLevelIndex(progress, after)].key).toBe("44/lar-dig");
+    expect(after[currentLevelIndex(progress, after)].key).toBe(`${NEXT_WEEK}/lar-dig`);
   });
 
   it("starts a new endless mix stream after the new week", () => {
-    expect(keysOf(after)).toContain(mixKey(44, 1));
-    expect(keysOf(after)).not.toContain(mixKey(43, 6));
+    expect(keysOf(after)).toContain(mixKey(NEXT_WEEK, 1));
+    expect(keysOf(after)).not.toContain(mixKey(NEWEST_WEEK, 6));
   });
 });
 
